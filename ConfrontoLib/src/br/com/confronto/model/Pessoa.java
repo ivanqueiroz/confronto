@@ -6,14 +6,12 @@ package br.com.confronto.model;
  */
 public class Pessoa {
 
-    public final int FEMININO = 0;
-    public final int MASCULINO = 1;
     private String nome;
     private String estado;
     private String cidade;
     private String endereco;
+    private String cep;
     private int tipo;
-    private int sexo;
 
     public String getCidade() {
         return cidade;
@@ -47,19 +45,19 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public int getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(int sexo) {
-        this.sexo = sexo;
-    }
-
     public int getTipo() {
         return tipo;
     }
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 }
