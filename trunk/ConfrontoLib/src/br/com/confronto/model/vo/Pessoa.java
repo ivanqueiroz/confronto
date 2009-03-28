@@ -1,4 +1,4 @@
-package br.com.confronto.model;
+package br.com.confronto.model.vo;
 
 /**
  *

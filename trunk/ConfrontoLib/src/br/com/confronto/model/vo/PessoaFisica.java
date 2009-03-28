@@ -1,4 +1,4 @@
-package br.com.confronto.model;
+package br.com.confronto.model.vo;
 
 import java.sql.Date;
 
@@ -8,8 +8,8 @@ import java.sql.Date;
  */
 public class PessoaFisica extends Pessoa {
 
-    protected static final int FEMININO = 0;
-    protected static final int MASCULINO = 1;
+    public static final byte FEMININO = 0;
+    public static final byte MASCULINO = 1;
     private String cpf;
     private String rg;
     private String pis;
@@ -17,7 +17,7 @@ public class PessoaFisica extends Pessoa {
     private String profissao;
     private String nacionalidade;
     private Date nascimento;
-    private int sexo;
+    private byte sexo;
 
     public String getNacionalidade() {
         return nacionalidade;
@@ -59,14 +59,6 @@ public class PessoaFisica extends Pessoa {
         this.rg = rg;
     }
 
-    public int getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(int sexo) {
-        this.sexo = sexo;
-    }
-
     public String getProfissao() {
         return profissao;
     }
@@ -81,6 +73,14 @@ public class PessoaFisica extends Pessoa {
 
     public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
+    }
+
+    public byte getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(byte sexo) {
+        this.sexo = sexo;
     }
 
 }
