@@ -72,11 +72,4 @@ public class PessoaDao {
         }
     }
 
-    public static void main(String[] args) {
-
-        PessoaFisica eu = new PessoaFisica();
-        eu.setNome("Ivan Queiroz");
-        eu.setSexo(PessoaFisica.MASCULINO);
-        DaoFactory.getInstancia().getPessoaDao().inserir(eu);
-    }
 }
