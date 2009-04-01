@@ -1,6 +1,7 @@
 package br.com.confronto.dao.factory;
 
 import br.com.confronto.dao.PessoaDao;
+import br.com.confronto.dao.SexoDao;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -62,5 +63,9 @@ public class DaoFactory {
 
     public PessoaDao getPessoaDao(){
         return new PessoaDao(connection);
+    }
+
+    public SexoDao getSexoDao(){
+        return new SexoDao(connection);
     }
 }

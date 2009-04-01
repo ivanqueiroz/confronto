@@ -6,6 +6,7 @@ package br.com.confronto.model.vo;
  */
 public class Pessoa {
 
+    private Long id;
     private String nome;
     private String estado;
     private String cidade;
@@ -59,5 +60,13 @@ public class Pessoa {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
