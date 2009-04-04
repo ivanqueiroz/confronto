@@ -30,16 +30,21 @@ public class ConfrontoFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        statusLabel = new javax.swing.JLabel();
         barraMenuPrincipal = new javax.swing.JMenuBar();
         menuCadastro = new javax.swing.JMenu();
         itemCadPessoa = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("confronto"); // NOI18N
         setTitle(bundle.getString("TITULO_CONFRONTO_FRM")); // NOI18N
         setMinimumSize(new java.awt.Dimension(800, 600));
         setName("frmPrincipal"); // NOI18N
+
+        statusLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        statusLabel.setMinimumSize(new java.awt.Dimension(4, 20));
+        statusLabel.setPreferredSize(new java.awt.Dimension(4, 20));
+        getContentPane().add(statusLabel, java.awt.BorderLayout.PAGE_END);
 
         menuCadastro.setMnemonic('C');
         menuCadastro.setText("Cadastro");
@@ -61,6 +66,12 @@ public class ConfrontoFrame extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 itemCadPessoaMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                itemCadPessoaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                itemCadPessoaMouseExited(evt);
+            }
         });
         itemCadPessoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,9 +81,6 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         menuCadastro.add(itemCadPessoa);
 
         barraMenuPrincipal.add(menuCadastro);
-
-        jMenu2.setText("Edit");
-        barraMenuPrincipal.add(jMenu2);
 
         setJMenuBar(barraMenuPrincipal);
 
@@ -93,6 +101,14 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_itemCadPessoaActionPerformed
 
+    private void itemCadPessoaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemCadPessoaMouseEntered
+        statusLabel.setText("Controle dos registros de pesssoas físicas.");
+    }//GEN-LAST:event_itemCadPessoaMouseEntered
+
+    private void itemCadPessoaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemCadPessoaMouseExited
+        statusLabel.setText(null);
+    }//GEN-LAST:event_itemCadPessoaMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -107,7 +123,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenuPrincipal;
     private javax.swing.JMenuItem itemCadPessoa;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu menuCadastro;
+    private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 }

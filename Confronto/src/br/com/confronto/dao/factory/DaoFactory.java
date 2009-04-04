@@ -2,6 +2,7 @@ package br.com.confronto.dao.factory;
 
 import br.com.confronto.dao.PessoaDao;
 import br.com.confronto.dao.SexoDao;
+import br.com.confronto.dao.TipoDao;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -67,5 +68,8 @@ public class DaoFactory {
 
     public SexoDao getSexoDao(){
         return new SexoDao(connection);
+    }
+    public TipoDao getTipoDao(){
+        return new TipoDao(connection);
     }
 }
