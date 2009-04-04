@@ -1,6 +1,5 @@
 package br.com.confronto.dao;
 
-import br.com.confronto.dao.factory.DaoFactory;
 import br.com.confronto.model.vo.Pessoa;
 import br.com.confronto.model.vo.PessoaFisica;
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class PessoaDao {
 
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
-    private final String SQL_INSERIR = SQL_PROP.getString("TBPESSOA_INSERIR");
+    private final String SQL_INSERIR = SQL_PROP.getString("TBPESSOA_INSERT");
     private final ResourceBundle LOG_PROP = ResourceBundle.getBundle("log");
 
     public PessoaDao(Connection connection) {

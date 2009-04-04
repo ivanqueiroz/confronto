@@ -7,6 +7,7 @@ package br.com.confronto.view;
 
 import br.com.confronto.dao.factory.DaoFactory;
 import br.com.confronto.model.vo.Sexo;
+import br.com.confronto.model.vo.Tipo;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 
@@ -15,7 +16,10 @@ import javax.swing.DefaultComboBoxModel;
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
 public class CadPessoaPanel extends javax.swing.JPanel {
+
     private static final long serialVersionUID = 1L;
+    private DefaultComboBoxModel modelSexo;
+    private DefaultComboBoxModel modelTipo;
 
     /** Creates new form CadPessoaPanel */
     public CadPessoaPanel() {
@@ -37,66 +41,84 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         jtfNome.setDocument(new LimitaTextField(60));
         cmbSexo = new javax.swing.JComboBox();
         lblSexo = new javax.swing.JLabel();
+        cmbTipoPessoa = new javax.swing.JComboBox();
+        lblTipo = new javax.swing.JLabel();
 
         lblNome.setText("Nome:");
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jtfNome, org.jdesktop.beansbinding.ObjectProperty.create(), lblNome, org.jdesktop.beansbinding.BeanProperty.create("labelFor"));
         bindingGroup.addBinding(binding);
 
+        jtfNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        cmbSexo.setModel(getModelSexo());
+        cmbSexo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cmbSexo.setMaximumSize(new java.awt.Dimension(28, 20));
         cmbSexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbSexoActionPerformed(evt);
             }
         });
-        cmbSexo.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                cmbSexoAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
 
         lblSexo.setText("Sexo:");
+
+        cmbTipoPessoa.setModel(getModelTipo());
+        cmbTipoPessoa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cmbTipoPessoa.setMaximumSize(new java.awt.Dimension(28, 20));
+
+        lblTipo.setText("Tipo:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addComponent(lblNome)
                 .addGap(18, 18, 18)
                 .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblSexo)
-                .addGap(18, 18, 18)
-                .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSexo)
+                    .addComponent(lblTipo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbTipoPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(108, 108, 108))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNome)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblSexo)
-                        .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(378, Short.MAX_VALUE))
+                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNome)
+                            .addComponent(lblSexo))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTipo)
+                            .addComponent(cmbTipoPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(377, 377, 377))
         );
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbSexoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cmbSexoAncestorAdded
-        // TODO add your handling code here:
+    public DefaultComboBoxModel getModelSexo() {
         Vector<Sexo> listaCombo = (Vector<Sexo>) DaoFactory.getInstancia().getSexoDao().getLista();
-        cmbSexo.setModel(new DefaultComboBoxModel(listaCombo));
-        cmbSexo.setSelectedIndex(-1);
-    }//GEN-LAST:event_cmbSexoAncestorAdded
+        modelSexo = new DefaultComboBoxModel(listaCombo);
+        return modelSexo;
+    }
+
+    public DefaultComboBoxModel getModelTipo() {
+        Vector<Tipo> listaCombo = (Vector<Tipo>) DaoFactory.getInstancia().getTipoDao().getTipos();
+        modelTipo = new DefaultComboBoxModel(listaCombo);
+        return modelTipo;
+    }
 
     private void cmbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSexoActionPerformed
         // TODO add your handling code here:
@@ -106,9 +128,11 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cmbSexo;
+    private javax.swing.JComboBox cmbTipoPessoa;
     private javax.swing.JTextField jtfNome;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblSexo;
+    private javax.swing.JLabel lblTipo;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
