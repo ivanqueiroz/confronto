@@ -16,6 +16,8 @@ public class PessoaFisica extends Pessoa {
     private String nacionalidade;
     private Date nascimento;
     private Sexo sexo;
+    private String pai;
+    private String mae;
 
     public String getNacionalidade() {
         return nacionalidade;
@@ -79,5 +81,21 @@ public class PessoaFisica extends Pessoa {
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
+    }
+
+    public String getMae() {
+        return mae;
+    }
+
+    public void setMae(String mae) {
+        this.mae = mae;
+    }
+
+    public String getPai() {
+        return pai;
+    }
+
+    public void setPai(String pai) {
+        this.pai = pai;
     }
 }

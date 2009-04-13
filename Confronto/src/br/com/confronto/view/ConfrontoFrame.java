@@ -32,7 +32,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
 
         statusLabel = new javax.swing.JLabel();
         barraMenuPrincipal = new javax.swing.JMenuBar();
-        menuCadastro = new javax.swing.JMenu();
+        menuControle = new javax.swing.JMenu();
         itemCadPessoa = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -46,19 +46,21 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         statusLabel.setPreferredSize(new java.awt.Dimension(4, 20));
         getContentPane().add(statusLabel, java.awt.BorderLayout.PAGE_END);
 
-        menuCadastro.setMnemonic('C');
-        menuCadastro.setText("Cadastro");
-        menuCadastro.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+        menuControle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/wrench.png"))); // NOI18N
+        menuControle.setMnemonic('C');
+        menuControle.setText("Controle");
+        menuControle.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
             public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
             }
             public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
             }
             public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
-                menuCadastroMenuKeyTyped(evt);
+                menuControleMenuKeyTyped(evt);
             }
         });
 
         itemCadPessoa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
+        itemCadPessoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/user.png"))); // NOI18N
         itemCadPessoa.setMnemonic('P');
         itemCadPessoa.setText("Pessoas");
         itemCadPessoa.setToolTipText("Cadastro de Pessoas");
@@ -78,18 +80,18 @@ public class ConfrontoFrame extends javax.swing.JFrame {
                 itemCadPessoaActionPerformed(evt);
             }
         });
-        menuCadastro.add(itemCadPessoa);
+        menuControle.add(itemCadPessoa);
 
-        barraMenuPrincipal.add(menuCadastro);
+        barraMenuPrincipal.add(menuControle);
 
         setJMenuBar(barraMenuPrincipal);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuCadastroMenuKeyTyped(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_menuCadastroMenuKeyTyped
+    private void menuControleMenuKeyTyped(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_menuControleMenuKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_menuCadastroMenuKeyTyped
+}//GEN-LAST:event_menuControleMenuKeyTyped
 
     private void itemCadPessoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemCadPessoaMouseClicked
     }//GEN-LAST:event_itemCadPessoaMouseClicked
@@ -98,6 +100,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         cadPessoaPanel = new CadPessoaPanel();
         this.getContentPane().add(cadPessoaPanel, BorderLayout.CENTER);
         this.getRootPane().validate();
+        statusLabel.setText(null);
 
     }//GEN-LAST:event_itemCadPessoaActionPerformed
 
@@ -133,7 +136,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenuPrincipal;
     private javax.swing.JMenuItem itemCadPessoa;
-    private javax.swing.JMenu menuCadastro;
+    private javax.swing.JMenu menuControle;
     private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 }

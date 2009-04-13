@@ -4,19 +4,25 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="barraMenuPrincipal">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="menuCadastro">
+        <Menu class="javax.swing.JMenu" name="menuControle">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/com/confronto/resources/wrench.png"/>
+            </Property>
             <Property name="mnemonic" type="int" value="67"/>
-            <Property name="text" type="java.lang.String" value="Cadastro"/>
+            <Property name="text" type="java.lang.String" value="Controle"/>
           </Properties>
           <Events>
-            <EventHandler event="menuKeyTyped" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="menuCadastroMenuKeyTyped"/>
+            <EventHandler event="menuKeyTyped" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="menuControleMenuKeyTyped"/>
           </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemCadPessoa">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+P"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/confronto/resources/user.png"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="80"/>
                 <Property name="text" type="java.lang.String" value="Pessoas"/>
