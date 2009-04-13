@@ -4,15 +4,11 @@ import br.com.confronto.control.util.LogControl;
 import br.com.confronto.dao.PessoaDao;
 import br.com.confronto.dao.SexoDao;
 import br.com.confronto.dao.TipoDao;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 /**
  *

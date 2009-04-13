@@ -14,8 +14,10 @@ public class Pessoa {
     private String rua;
     private String cep;
     private Long tipo;
-    private String pai;
-    private String mae;
+    private String email;
+    private String telefoneComercial;
+    private String telefoneResidencial;
+    private String celular;
 
     public String getCidade() {
         return cidade;
@@ -81,19 +83,35 @@ public class Pessoa {
         this.id = id;
     }
 
-    public String getMae() {
-        return mae;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMae(String mae) {
-        this.mae = mae;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPai() {
-        return pai;
+    public String getCelular() {
+        return celular;
     }
 
-    public void setPai(String pai) {
-        this.pai = pai;
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getTelefoneComercial() {
+        return telefoneComercial;
+    }
+
+    public void setTelefoneComercial(String telefoneComercial) {
+        this.telefoneComercial = telefoneComercial;
+    }
+
+    public String getTelefoneResidencial() {
+        return telefoneResidencial;
+    }
+
+    public void setTelefoneResidencial(String telefoneResidencial) {
+        this.telefoneResidencial = telefoneResidencial;
     }
 }
