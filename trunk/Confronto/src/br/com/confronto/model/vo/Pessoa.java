@@ -10,9 +10,12 @@ public class Pessoa {
     private String nome;
     private String estado;
     private String cidade;
-    private String endereco;
+    private String bairro;
+    private String rua;
     private String cep;
     private Long tipo;
+    private String pai;
+    private String mae;
 
     public String getCidade() {
         return cidade;
@@ -22,12 +25,20 @@ public class Pessoa {
         this.cidade = cidade;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getBairro() {
+        return bairro;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
     }
 
     public String getEstado() {
@@ -68,5 +79,21 @@ public class Pessoa {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getMae() {
+        return mae;
+    }
+
+    public void setMae(String mae) {
+        this.mae = mae;
+    }
+
+    public String getPai() {
+        return pai;
+    }
+
+    public void setPai(String pai) {
+        this.pai = pai;
     }
 }

@@ -30,7 +30,10 @@ public class Tipo implements Serializable {
 
     @Override
     public String toString() {
-        return tipo;
+        if(tipo == null){
+            tipo = "";
+        }
+        return tipo.toUpperCase();
     }
 
 

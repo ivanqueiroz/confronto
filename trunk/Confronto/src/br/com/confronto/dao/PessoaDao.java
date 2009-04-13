@@ -20,7 +20,7 @@ public class PessoaDao {
 
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
-    private final String SQL_INSERIR = SQL_PROP.getString("TBPESSOA_INSERT");
+    private final String SQL_INSERT = SQL_PROP.getString("TBPESSOA_INSERT");
     private final ResourceBundle LOG_PROP = ResourceBundle.getBundle("log");
 
     public PessoaDao(Connection connection) {
@@ -32,9 +32,9 @@ public class PessoaDao {
         if (pessoa != null && pessoa instanceof PessoaFisica) {
             PessoaFisica pf = (PessoaFisica) pessoa;
             try {
-                PreparedStatement ps = connection.prepareStatement(SQL_INSERIR);
+                PreparedStatement ps = connection.prepareStatement(SQL_INSERT);
                 ps.setString(1, pf.getNome());
-                ps.setString(2, pf.getEndereco());
+                ps.setString(2, pf.getRua());
                 ps.setString(3, pf.getEstado());
                 ps.setString(4, pf.getCidade());
                 ps.setString(5, pf.getCep());
@@ -44,7 +44,7 @@ public class PessoaDao {
                 ps.setString(9, pf.getCtps());
                 ps.setString(10, pf.getProfissao());
                 ps.setString(11, pf.getNacionalidade());
-                ps.setByte(12, pf.getSexo());
+                ps.setLong(12, pf.getSexo().getId());
 
                 if(ps.executeUpdate()>0){
                     resultado = true;

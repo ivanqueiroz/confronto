@@ -8,8 +8,6 @@ import java.sql.Date;
  */
 public class PessoaFisica extends Pessoa {
 
-    public static final byte FEMININO = 0;
-    public static final byte MASCULINO = 1;
     private String cpf;
     private String rg;
     private String pis;
@@ -17,7 +15,7 @@ public class PessoaFisica extends Pessoa {
     private String profissao;
     private String nacionalidade;
     private Date nascimento;
-    private byte sexo;
+    private Sexo sexo;
 
     public String getNacionalidade() {
         return nacionalidade;
@@ -75,12 +73,11 @@ public class PessoaFisica extends Pessoa {
         this.nascimento = nascimento;
     }
 
-    public byte getSexo() {
+    public Sexo getSexo() {
         return sexo;
     }
 
-    public void setSexo(byte sexo) {
+    public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
-
 }
