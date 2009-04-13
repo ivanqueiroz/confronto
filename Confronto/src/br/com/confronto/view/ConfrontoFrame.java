@@ -98,7 +98,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         cadPessoaPanel = new CadPessoaPanel();
         this.getContentPane().add(cadPessoaPanel, BorderLayout.CENTER);
         this.getRootPane().validate();
-        
+
     }//GEN-LAST:event_itemCadPessoaActionPerformed
 
     private void itemCadPessoaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemCadPessoaMouseEntered
@@ -116,6 +116,16 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
+                try {
+                    //javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                    javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+
                 new ConfrontoFrame().setVisible(true);
             }
         });

@@ -1,5 +1,6 @@
 package br.com.confronto.dao;
 
+import br.com.confronto.control.util.LogControl;
 import br.com.confronto.model.vo.Tipo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,18 +25,22 @@ public class TipoDao {
     private final String SQL_ATUALIZAR = SQL_PROP.getString("TBTIPO_UPDATE");
     private final String SQL_LISTAR = SQL_PROP.getString("TBTIPO_SELECT");
     private final ResourceBundle LOG_PROP = ResourceBundle.getBundle("log");
+    private final LogControl log = new LogControl();
 
     public TipoDao(Connection connection) {
         this.connection = connection;
     }
 
     public List<Tipo> getTipos() {
-        List<Tipo> tipos = new Vector<Tipo>();
+        List<Tipo> tipos = null;
         Tipo aux = null;
         ResultSet rs = null;
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = connection.prepareStatement(SQL_LISTAR);
+            ps = connection.prepareStatement(SQL_LISTAR);
             rs = ps.executeQuery();
+            tipos = new Vector<Tipo>();
+            tipos.add(new Tipo());
             while(rs.next()){
                 aux = new Tipo();
                 aux.setId(rs.getLong(1));
@@ -43,7 +48,22 @@ public class TipoDao {
                 tipos.add(aux);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TipoDao.class.getName()).log(Level.SEVERE, null, ex);
+            log.toLog(this.getClass(), "Erro ao executar listagem de tipos: "+ex.getMessage(), Level.SEVERE);
+        }finally{
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    log.toLog(this.getClass(),"Erro ao obter fechar Prepared Statement: "+ex.getMessage(), Level.SEVERE);
+                }
+            }
+            if(rs!=null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    log.toLog(this.getClass(), "Erro ao fechar result set: "+ex.getMessage(), Level.SEVERE);
+                }
+            }
         }
         return tipos;
     }
