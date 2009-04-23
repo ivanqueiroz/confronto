@@ -5,7 +5,7 @@
  */
 package br.com.confronto.view;
 
-import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
 
 /**
  *
@@ -14,7 +14,6 @@ import java.awt.BorderLayout;
 public class ConfrontoFrame extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
-    private CadPessoaPanel cadPessoaPanel;
 
     /** Creates new form ConfontoFrame */
     public ConfrontoFrame() {
@@ -31,6 +30,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         statusLabel = new javax.swing.JLabel();
+        jplShow = new javax.swing.JPanel();
         barraMenuPrincipal = new javax.swing.JMenuBar();
         menuControle = new javax.swing.JMenu();
         itemCadPessoa = new javax.swing.JMenuItem();
@@ -38,13 +38,17 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("confronto"); // NOI18N
         setTitle(bundle.getString("TITULO_CONFRONTO_FRM")); // NOI18N
-        setMinimumSize(new java.awt.Dimension(800, 600));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMinimumSize(new java.awt.Dimension(900, 600));
         setName("frmPrincipal"); // NOI18N
 
         statusLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         statusLabel.setMinimumSize(new java.awt.Dimension(4, 20));
         statusLabel.setPreferredSize(new java.awt.Dimension(4, 20));
         getContentPane().add(statusLabel, java.awt.BorderLayout.PAGE_END);
+
+        jplShow.setLayout(new java.awt.GridBagLayout());
+        getContentPane().add(jplShow, java.awt.BorderLayout.CENTER);
 
         menuControle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/wrench.png"))); // NOI18N
         menuControle.setMnemonic('C');
@@ -97,8 +101,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_itemCadPessoaMouseClicked
 
     private void itemCadPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadPessoaActionPerformed
-        cadPessoaPanel = new CadPessoaPanel();
-        this.getContentPane().add(cadPessoaPanel, BorderLayout.CENTER);
+        jplShow.add(new CadPessoaPanel());
         this.getRootPane().validate();
         statusLabel.setText(null);
 
@@ -134,9 +137,10 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar barraMenuPrincipal;
-    private javax.swing.JMenuItem itemCadPessoa;
-    private javax.swing.JMenu menuControle;
-    private javax.swing.JLabel statusLabel;
+    javax.swing.JMenuBar barraMenuPrincipal;
+    javax.swing.JMenuItem itemCadPessoa;
+    javax.swing.JPanel jplShow;
+    javax.swing.JMenu menuControle;
+    javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,8 +8,14 @@ package br.com.confronto.view;
 import br.com.confronto.dao.factory.DaoFactory;
 import br.com.confronto.model.vo.Sexo;
 import br.com.confronto.model.vo.Tipo;
+import java.awt.Color;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
 
 /**
  *
@@ -59,6 +65,9 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         lblMae = new javax.swing.JLabel();
         jtfNome = new javax.swing.JTextField();
         jtfNome.setDocument(new LimitaTextField(60));
+        lblPIS = new javax.swing.JLabel();
+        jtfPIS = new javax.swing.JTextField();
+        jtfCTPS.setDocument(new LimitaTextField(7));
         jpEndereco = new javax.swing.JPanel();
         lblEndereco = new javax.swing.JLabel();
         jtfEndereco = new javax.swing.JTextField();
@@ -74,12 +83,26 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         lblCep = new javax.swing.JLabel();
         jpContato = new javax.swing.JPanel();
         lblTelResidencial = new javax.swing.JLabel();
-        jftfTelResidencial = new javax.swing.JFormattedTextField();
+        jftfTelFixo = new javax.swing.JFormattedTextField();
+        jftfCelular = new javax.swing.JFormattedTextField();
+        lblCelular = new javax.swing.JLabel();
+        lblFax = new javax.swing.JLabel();
+        jftfFax = new javax.swing.JFormattedTextField();
+        lblFixoIcon = new javax.swing.JLabel();
+        lblCelIcon = new javax.swing.JLabel();
+        lblFaxIcon = new javax.swing.JLabel();
+        lblOutro = new javax.swing.JLabel();
+        jftfOutro = new javax.swing.JFormattedTextField();
+        lblOutroIcon = new javax.swing.JLabel();
+        lblEmailIcon = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        jtfEmail = new javax.swing.JTextField();
+        jtfEmail.setDocument(new LimitaTextField(60));
 
         jpDadosPessoa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pessoa Física"));
 
         lblTipo.setLabelFor(cmbTipoPessoa);
-        lblTipo.setText("Tipo:");
+        lblTipo.setText("Tipo Cliente:");
 
         cmbTipoPessoa.setModel(getModelTipo());
         cmbTipoPessoa.setMaximumSize(new java.awt.Dimension(28, 20));
@@ -140,6 +163,9 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
         jtfNome.setMaximumSize(new java.awt.Dimension(6, 320));
 
+        lblPIS.setLabelFor(jtfPIS);
+        lblPIS.setText("PIS:");
+
         javax.swing.GroupLayout jpDadosPessoaLayout = new javax.swing.GroupLayout(jpDadosPessoa);
         jpDadosPessoa.setLayout(jpDadosPessoaLayout);
         jpDadosPessoaLayout.setHorizontalGroup(
@@ -149,14 +175,14 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpDadosPessoaLayout.createSequentialGroup()
                         .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblTipo)
                             .addComponent(lblPai)
                             .addComponent(lblNome)
                             .addComponent(lblRg)
                             .addComponent(lblCTPS)
                             .addComponent(lblEstadoCivil)
                             .addComponent(lblNacionalidade)
-                            .addComponent(lblProfissao)
-                            .addComponent(lblTipo))
+                            .addComponent(lblProfissao))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpDadosPessoaLayout.createSequentialGroup()
@@ -167,14 +193,16 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                                     .addComponent(jtfNacionalidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                                     .addComponent(cmbProfissao, javax.swing.GroupLayout.Alignment.LEADING, 0, 129, Short.MAX_VALUE)
                                     .addComponent(cmbTipoPessoa, javax.swing.GroupLayout.Alignment.LEADING, 0, 129, Short.MAX_VALUE))
-                                .addGap(32, 32, 32)
+                                .addGap(31, 31, 31)
                                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblCPF)
-                                    .addComponent(lblSexo))
+                                    .addComponent(lblSexo)
+                                    .addComponent(lblPIS))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jftfCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                                    .addComponent(cmbSexo, 0, 128, Short.MAX_VALUE)))
+                                .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jtfPIS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                                    .addComponent(jftfCPF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                                    .addComponent(cmbSexo, javax.swing.GroupLayout.Alignment.LEADING, 0, 129, Short.MAX_VALUE)))
                             .addComponent(jtfPai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDadosPessoaLayout.createSequentialGroup()
@@ -200,7 +228,9 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfCTPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCTPS))
+                    .addComponent(lblCTPS)
+                    .addComponent(jtfPIS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPIS))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,7 +246,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                     .addComponent(lblProfissao)
                     .addComponent(cmbProfissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbTipoPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -267,7 +297,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                     .addComponent(lblCep))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtfEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                    .addComponent(jtfEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addGroup(jpEnderecoLayout.createSequentialGroup()
                         .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(cmbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -304,13 +334,60 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
         jpContato.setBorder(javax.swing.BorderFactory.createTitledBorder("Contato"));
 
-        lblTelResidencial.setText("Tel. residencial:");
+        lblTelResidencial.setLabelFor(jftfTelFixo);
+        lblTelResidencial.setText("Tel. Fixo:");
 
         try {
-            jftfTelResidencial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+            jftfTelFixo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+
+        try {
+            jftfCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        lblCelular.setLabelFor(jftfCelular);
+        lblCelular.setText("Tel. Celular:");
+
+        lblFax.setLabelFor(jftfFax);
+        lblFax.setText("Fax:");
+
+        try {
+            jftfFax.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        lblFixoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/telephone.png"))); // NOI18N
+        lblFixoIcon.setLabelFor(jftfTelFixo);
+
+        lblCelIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/phone.png"))); // NOI18N
+        lblCelIcon.setLabelFor(jftfCelular);
+
+        lblFaxIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/printer.png"))); // NOI18N
+        lblFaxIcon.setLabelFor(jftfFax);
+
+        lblOutro.setLabelFor(jftfOutro);
+        lblOutro.setText("Outro:");
+
+        try {
+            jftfOutro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        lblOutroIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/help.png"))); // NOI18N
+        lblOutroIcon.setLabelFor(jftfOutro);
+
+        lblEmailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/email.png"))); // NOI18N
+        lblEmailIcon.setLabelFor(jtfEmail);
+
+        lblEmail.setText("E-mail:");
+
+        jtfEmail.setInputVerifier(new VerificaEmail());
 
         javax.swing.GroupLayout jpContatoLayout = new javax.swing.GroupLayout(jpContato);
         jpContato.setLayout(jpContatoLayout);
@@ -318,18 +395,69 @@ public class CadPessoaPanel extends javax.swing.JPanel {
             jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpContatoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTelResidencial)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jftfTelResidencial, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTelResidencial)
+                    .addComponent(lblCelular)
+                    .addComponent(lblFax))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpContatoLayout.createSequentialGroup()
+                        .addComponent(jftfFax, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFaxIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addComponent(lblOutro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jftfOutro, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblOutroIcon))
+                    .addGroup(jpContatoLayout.createSequentialGroup()
+                        .addComponent(jftfCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCelIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addComponent(lblEmail)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEmailIcon))
+                    .addGroup(jpContatoLayout.createSequentialGroup()
+                        .addComponent(jftfTelFixo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFixoIcon)))
+                .addContainerGap())
         );
         jpContatoLayout.setVerticalGroup(
             jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpContatoLayout.createSequentialGroup()
-                .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTelResidencial)
-                    .addComponent(jftfTelResidencial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpContatoLayout.createSequentialGroup()
+                        .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jftfTelFixo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTelResidencial)
+                            .addComponent(lblFixoIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jftfCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCelular)
+                            .addComponent(lblCelIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jftfFax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFax)
+                            .addComponent(lblFaxIcon)))
+                    .addGroup(jpContatoLayout.createSequentialGroup()
+                        .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jftfOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblOutro)
+                            .addComponent(lblOutroIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEmailIcon)
+                            .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblEmail)))))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -340,16 +468,16 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jpDadosPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpContato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jpContato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -362,7 +490,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public DefaultComboBoxModel getModelSexo() {
-        
+
         modelSexo = new DefaultComboBoxModel(new Sexo[]{null, Sexo.getFeminino(), Sexo.getMaculino()});
         return modelSexo;
     }
@@ -381,7 +509,6 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         Sexo sexo = (Sexo) cmbSexo.getSelectedItem();
         System.out.println(sexo);
     }//GEN-LAST:event_cmbSexoActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cmbCidade;
     private javax.swing.JComboBox cmbEstado;
@@ -390,30 +517,45 @@ public class CadPessoaPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox cmbSexo;
     private javax.swing.JComboBox cmbTipoPessoa;
     private javax.swing.JFormattedTextField jftfCPF;
+    private javax.swing.JFormattedTextField jftfCelular;
     private javax.swing.JFormattedTextField jftfCep;
+    private javax.swing.JFormattedTextField jftfFax;
+    private javax.swing.JFormattedTextField jftfOutro;
     private javax.swing.JFormattedTextField jftfRg;
-    private javax.swing.JFormattedTextField jftfTelResidencial;
+    private javax.swing.JFormattedTextField jftfTelFixo;
     private javax.swing.JPanel jpContato;
     private javax.swing.JPanel jpDadosPessoa;
     private javax.swing.JPanel jpEndereco;
     private javax.swing.JTextField jtfBairro;
     private javax.swing.JTextField jtfCTPS;
+    private javax.swing.JTextField jtfEmail;
     private javax.swing.JTextField jtfEndereco;
     private javax.swing.JTextField jtfMae;
     private javax.swing.JTextField jtfNacionalidade;
     private javax.swing.JTextField jtfNome;
+    private javax.swing.JTextField jtfPIS;
     private javax.swing.JTextField jtfPai;
     private javax.swing.JLabel lblBairro;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblCTPS;
+    private javax.swing.JLabel lblCelIcon;
+    private javax.swing.JLabel lblCelular;
     private javax.swing.JLabel lblCep;
     private javax.swing.JLabel lblCidade;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblEmailIcon;
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblEstadoCivil;
+    private javax.swing.JLabel lblFax;
+    private javax.swing.JLabel lblFaxIcon;
+    private javax.swing.JLabel lblFixoIcon;
     private javax.swing.JLabel lblMae;
     private javax.swing.JLabel lblNacionalidade;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblOutro;
+    private javax.swing.JLabel lblOutroIcon;
+    private javax.swing.JLabel lblPIS;
     private javax.swing.JLabel lblPai;
     private javax.swing.JLabel lblProfissao;
     private javax.swing.JLabel lblRg;
