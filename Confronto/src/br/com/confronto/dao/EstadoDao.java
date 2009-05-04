@@ -1,7 +1,7 @@
 package br.com.confronto.dao;
 
 import br.com.confronto.control.util.LogControl;
-import br.com.confronto.model.vo.TipoCliente;
+import br.com.confronto.model.vo.Estado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,38 +15,40 @@ import java.util.logging.Level;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class TipoDao {
+public class EstadoDao {
 
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
-    private final String SQL_INSERIR = SQL_PROP.getString("TBTIPO_INSERT");
-    private final String SQL_APAGAR = SQL_PROP.getString("TBTIPO_DELETE");
-    private final String SQL_ATUALIZAR = SQL_PROP.getString("TBTIPO_UPDATE");
-    private final String SQL_LISTAR = SQL_PROP.getString("TBTIPO_SELECT");
+    private final String SQL_INSERIR = SQL_PROP.getString("TBESTADO_INSERT");
+    private final String SQL_APAGAR = SQL_PROP.getString("TBESTADO_DELETE");
+    private final String SQL_ATUALIZAR = SQL_PROP.getString("TBESTADO_UPDATE");
+    private final String SQL_LISTAR = SQL_PROP.getString("TBESTADO_SELECT");
     private final LogControl log = new LogControl();
 
-    public TipoDao(Connection connection) {
+    public EstadoDao(Connection connection) {
         this.connection = connection;
     }
 
-    public List<TipoCliente> getTipos() {
-        List<TipoCliente> tipos = null;
-        TipoCliente aux = null;
+    public List<Estado> getEstados() {
+        List<Estado> estados = null;
+        Estado aux = null;
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(SQL_LISTAR);
             rs = ps.executeQuery();
-            tipos = new Vector<TipoCliente>();
-            tipos.add(new TipoCliente());
+            estados = new Vector<Estado>();
+            estados.add(new Estado());
             while (rs.next()) {
-                aux = new TipoCliente();
+                aux = new Estado();
                 aux.setId(rs.getLong(1));
-                aux.setTipo(rs.getString(2));
-                tipos.add(aux);
+                aux.setEstado(rs.getString(2));
+                aux.setSiglaUf(rs.getString(3));
+                aux.setRegiaoBrasil(rs.getString(4));
+                estados.add(aux);
             }
         } catch (SQLException ex) {
-            log.toLog(this.getClass(), "Erro ao executar listagem de tipos: " + ex.getMessage(), Level.SEVERE);
+            log.toLog(this.getClass(), "Erro ao executar listagem de estados: " + ex.getMessage(), Level.SEVERE);
         } finally {
             if (connection != null) {
                 try {
@@ -70,6 +72,7 @@ public class TipoDao {
                 }
             }
         }
-        return tipos;
+        
+        return estados;
     }
 }

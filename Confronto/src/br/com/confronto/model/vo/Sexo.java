@@ -23,7 +23,7 @@ public class Sexo {
         return feminino;
     }
 
-    public static Sexo getMaculino() {
+    public static Sexo getMasculino() {
         return masculino;
     }
 

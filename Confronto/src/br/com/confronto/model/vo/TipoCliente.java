@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class Tipo implements Serializable {
+public class TipoCliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Long id;

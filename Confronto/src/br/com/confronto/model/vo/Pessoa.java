@@ -13,11 +13,12 @@ public class Pessoa {
     private String bairro;
     private String rua;
     private String cep;
-    private Long tipo;
+    private TipoCliente tipoCliente;
     private String email;
     private String telefoneComercial;
     private String telefoneResidencial;
     private String celular;
+    private String fax;
 
     public String getCidade() {
         return cidade;
@@ -59,12 +60,15 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public Long getTipo() {
-        return tipo;
+    public TipoCliente getTipoCliente() {
+        if (tipoCliente == null) {
+            tipoCliente = new TipoCliente();
+        }
+        return tipoCliente;
     }
 
-    public void setTipo(Long tipo) {
-        this.tipo = tipo;
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente;
     }
 
     public String getCep() {
@@ -113,5 +117,13 @@ public class Pessoa {
 
     public void setTelefoneResidencial(String telefoneResidencial) {
         this.telefoneResidencial = telefoneResidencial;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 }

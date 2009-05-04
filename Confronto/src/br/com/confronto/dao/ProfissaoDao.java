@@ -1,7 +1,7 @@
 package br.com.confronto.dao;
 
 import br.com.confronto.control.util.LogControl;
-import br.com.confronto.model.vo.TipoCliente;
+import br.com.confronto.model.vo.Profissao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,38 +15,38 @@ import java.util.logging.Level;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class TipoDao {
+public class ProfissaoDao {
 
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
-    private final String SQL_INSERIR = SQL_PROP.getString("TBTIPO_INSERT");
-    private final String SQL_APAGAR = SQL_PROP.getString("TBTIPO_DELETE");
-    private final String SQL_ATUALIZAR = SQL_PROP.getString("TBTIPO_UPDATE");
-    private final String SQL_LISTAR = SQL_PROP.getString("TBTIPO_SELECT");
+    private final String SQL_INSERIR = SQL_PROP.getString("TBPROFISSAO_INSERT");
+    private final String SQL_APAGAR = SQL_PROP.getString("TBPROFISSAO_DELETE");
+    private final String SQL_ATUALIZAR = SQL_PROP.getString("TBPROFISSAO_UPDATE");
+    private final String SQL_LISTAR = SQL_PROP.getString("TBPROFISSAO_SELECT");
     private final LogControl log = new LogControl();
 
-    public TipoDao(Connection connection) {
+    public ProfissaoDao(Connection connection) {
         this.connection = connection;
     }
 
-    public List<TipoCliente> getTipos() {
-        List<TipoCliente> tipos = null;
-        TipoCliente aux = null;
+    public List<Profissao> getProfissoes() {
+        List<Profissao> profissoes = null;
+        Profissao aux = null;
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(SQL_LISTAR);
             rs = ps.executeQuery();
-            tipos = new Vector<TipoCliente>();
-            tipos.add(new TipoCliente());
+            profissoes = new Vector<Profissao>();
+            profissoes.add(new Profissao());
             while (rs.next()) {
-                aux = new TipoCliente();
+                aux = new Profissao();
                 aux.setId(rs.getLong(1));
-                aux.setTipo(rs.getString(2));
-                tipos.add(aux);
+                aux.setProfissao(rs.getString(2));
+                profissoes.add(aux);
             }
         } catch (SQLException ex) {
-            log.toLog(this.getClass(), "Erro ao executar listagem de tipos: " + ex.getMessage(), Level.SEVERE);
+            log.toLog(this.getClass(), "Erro ao executar listagem de profissoes: " + ex.getMessage(), Level.SEVERE);
         } finally {
             if (connection != null) {
                 try {
@@ -70,6 +70,6 @@ public class TipoDao {
                 }
             }
         }
-        return tipos;
+        return profissoes;
     }
 }
