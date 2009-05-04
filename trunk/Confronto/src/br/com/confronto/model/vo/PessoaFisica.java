@@ -18,6 +18,7 @@ public class PessoaFisica extends Pessoa {
     private Sexo sexo;
     private String pai;
     private String mae;
+    private EstadoCivil estadoCivil;
 
     public String getNacionalidade() {
         return nacionalidade;
@@ -76,6 +77,9 @@ public class PessoaFisica extends Pessoa {
     }
 
     public Sexo getSexo() {
+        if(sexo == null){
+            sexo = new Sexo();
+        }
         return sexo;
     }
 
@@ -97,5 +101,16 @@ public class PessoaFisica extends Pessoa {
 
     public void setPai(String pai) {
         this.pai = pai;
+    }
+
+    public EstadoCivil getEstadoCivil() {
+        if (estadoCivil == null){
+            estadoCivil = new EstadoCivil();
+        }
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(EstadoCivil estadoCivil) {
+        this.estadoCivil = estadoCivil;
     }
 }

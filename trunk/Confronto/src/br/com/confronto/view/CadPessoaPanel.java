@@ -6,16 +6,19 @@
 package br.com.confronto.view;
 
 import br.com.confronto.dao.factory.DaoFactory;
+import br.com.confronto.model.vo.Cidade;
+import br.com.confronto.model.vo.Estado;
+import br.com.confronto.model.vo.EstadoCivil;
+import br.com.confronto.model.vo.PessoaFisica;
+import br.com.confronto.model.vo.Profissao;
 import br.com.confronto.model.vo.Sexo;
-import br.com.confronto.model.vo.Tipo;
-import java.awt.Color;
+import br.com.confronto.model.vo.TipoCliente;
+import br.com.confronto.util.CidadeComparator;
+import br.com.confronto.util.EstadoComparator;
+import java.util.Collections;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,9 +27,7 @@ import javax.swing.JTextField;
 public class CadPessoaPanel extends javax.swing.JPanel {
 
     private static final long serialVersionUID = 1L;
-    private DefaultComboBoxModel modelSexo;
-    private DefaultComboBoxModel modelTipo;
-    DaoFactory factory = null;
+    private DaoFactory factory = null;
 
     /** Creates new form CadPessoaPanel */
     public CadPessoaPanel() {
@@ -98,6 +99,9 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         lblEmail = new javax.swing.JLabel();
         jtfEmail = new javax.swing.JTextField();
         jtfEmail.setDocument(new LimitaTextField(60));
+        jpnListagem = new javax.swing.JPanel();
+        jspListagem = new javax.swing.JScrollPane();
+        jtblListaPessoas = new javax.swing.JTable();
 
         jpDadosPessoa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pessoa Física"));
 
@@ -126,11 +130,12 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
         lblEstadoCivil.setText("Estado Civil:");
 
-        cmbEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEstadoCivil.setModel(getModelTipo());
 
         lblProfissao.setText("Profissão:");
 
-        cmbProfissao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbProfissao.setModel(getModelProfissao());
+        cmbProfissao.setAutoscrolls(true);
 
         lblRg.setLabelFor(jftfRg);
         lblRg.setText("RG:");
@@ -184,14 +189,15 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                             .addComponent(lblNacionalidade)
                             .addComponent(lblProfissao))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpDadosPessoaLayout.createSequentialGroup()
+                        .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfPai, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                            .addComponent(jtfNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                            .addGroup(jpDadosPessoaLayout.createSequentialGroup()
                                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.Alignment.LEADING, 0, 129, Short.MAX_VALUE)
                                     .addComponent(jftfRg, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                                     .addComponent(jtfCTPS, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                                     .addComponent(jtfNacionalidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                                    .addComponent(cmbProfissao, javax.swing.GroupLayout.Alignment.LEADING, 0, 129, Short.MAX_VALUE)
                                     .addComponent(cmbTipoPessoa, javax.swing.GroupLayout.Alignment.LEADING, 0, 129, Short.MAX_VALUE))
                                 .addGap(31, 31, 31)
                                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -203,13 +209,11 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                                     .addComponent(jtfPIS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                                     .addComponent(jftfCPF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                                     .addComponent(cmbSexo, javax.swing.GroupLayout.Alignment.LEADING, 0, 129, Short.MAX_VALUE)))
-                            .addComponent(jtfPai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)))
+                            .addComponent(cmbProfissao, 0, 321, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDadosPessoaLayout.createSequentialGroup()
                         .addComponent(lblMae)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfMae, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)))
+                        .addComponent(jtfMae, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jpDadosPessoaLayout.setVerticalGroup(
@@ -249,10 +253,10 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbTipoPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTipo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPai))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblPai)
+                    .addComponent(jtfPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfMae, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,9 +274,15 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
         lblCidade.setText("Cidade:");
 
-        cmbCidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<CIDADE>" }));
+        cmbCidade.setEnabled(false);
 
-        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEstado.setModel(getModelEstado());
+        cmbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEstadoActionPerformed(evt);
+            }
+        });
 
         lblEstado.setText("Estado:");
 
@@ -289,24 +299,27 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         jpEnderecoLayout.setHorizontalGroup(
             jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpEnderecoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblBairro)
-                    .addComponent(lblEndereco)
-                    .addComponent(lblCidade)
-                    .addComponent(lblCep))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtfEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addGroup(jpEnderecoLayout.createSequentialGroup()
-                        .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cmbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jtfBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
-                        .addGap(68, 68, 68)
+                        .addGap(15, 15, 15)
+                        .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblBairro)
+                            .addComponent(lblEndereco)
+                            .addComponent(lblCep))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                            .addComponent(jtfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jftfCep, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpEnderecoLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(lblEstado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jftfCep, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(lblCidade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbCidade, 0, 147, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jpEnderecoLayout.setVerticalGroup(
@@ -321,10 +334,10 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                     .addComponent(lblBairro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCidade)
                     .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEstado))
+                    .addComponent(lblEstado)
+                    .addComponent(cmbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCidade))
                 .addGap(8, 8, 8)
                 .addGroup(jpEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jftfCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -457,32 +470,63 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                             .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblEmail)))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        jpnListagem.setBorder(javax.swing.BorderFactory.createTitledBorder("Listagem"));
+
+        jtblListaPessoas.setModel(getTableModelPessoas());
+        jtblListaPessoas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtblListaPessoasMouseClicked(evt);
+            }
+        });
+        jspListagem.setViewportView(jtblListaPessoas);
+
+        javax.swing.GroupLayout jpnListagemLayout = new javax.swing.GroupLayout(jpnListagem);
+        jpnListagem.setLayout(jpnListagemLayout);
+        jpnListagemLayout.setHorizontalGroup(
+            jpnListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnListagemLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jspListagem, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpnListagemLayout.setVerticalGroup(
+            jpnListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnListagemLayout.createSequentialGroup()
+                .addComponent(jspListagem, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpDadosPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jpContato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jpnListagem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jpDadosPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jpContato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jpEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpContato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jpDadosPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpnListagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -490,25 +534,111 @@ public class CadPessoaPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public DefaultComboBoxModel getModelSexo() {
-
-        modelSexo = new DefaultComboBoxModel(new Sexo[]{null, Sexo.getFeminino(), Sexo.getMaculino()});
-        return modelSexo;
+        return new DefaultComboBoxModel(new Sexo[]{null, Sexo.getFeminino(), Sexo.getMasculino()});
     }
 
     public DefaultComboBoxModel getModelTipo() {
+        DefaultComboBoxModel modelTipo = null;
         factory = new DaoFactory();
-        Vector<Tipo> listaCombo = (Vector<Tipo>) factory.getTipoDao().getTipos();
+        Vector<TipoCliente> listaCombo = (Vector<TipoCliente>) factory.getTipoDao().getTipos();
         if (listaCombo != null) {
             modelTipo = new DefaultComboBoxModel(listaCombo);
         }
-        factory.close();
         return modelTipo;
+    }
+
+    public DefaultComboBoxModel getModelProfissao() {
+        DefaultComboBoxModel modelProfissao = null;
+        factory = new DaoFactory();
+        Vector<Profissao> listaCombo = (Vector<Profissao>) factory.getProfissaoDao().getProfissoes();
+        if (listaCombo != null) {
+            modelProfissao = new DefaultComboBoxModel(listaCombo);
+        }
+        return modelProfissao;
+    }
+
+    public DefaultComboBoxModel getModelEstadoCivil() {
+        DefaultComboBoxModel modelEstadoCivil = null;
+        factory = new DaoFactory();
+        Vector<EstadoCivil> listaCombo = (Vector<EstadoCivil>) factory.getEstadoCivilDao().getLista();
+        if (listaCombo != null) {
+            modelEstadoCivil = new DefaultComboBoxModel(listaCombo);
+        }
+        return modelEstadoCivil;
+    }
+
+    public DefaultComboBoxModel getModelEstado() {
+        DefaultComboBoxModel modelEstado = null;
+        factory = new DaoFactory();
+        Vector<Estado> listaCombo = (Vector<Estado>) factory.getEstadoDao().getEstados();
+        Collections.sort(listaCombo, new EstadoComparator());
+        if (listaCombo != null) {
+            modelEstado = new DefaultComboBoxModel(listaCombo);
+        }
+        return modelEstado;
+    }
+
+    public DefaultComboBoxModel getModelCidade(String siglaUf) {
+        DefaultComboBoxModel modelCidade = null;
+        factory = new DaoFactory();
+        Vector<Cidade> listaCombo = (Vector<Cidade>) factory.getCidadeDao().getCidadesPorEstado(siglaUf);
+        Collections.sort(listaCombo, new CidadeComparator());
+        if (listaCombo != null) {
+            modelCidade = new DefaultComboBoxModel(listaCombo);
+        }
+        return modelCidade;
+    }
+
+    public DefaultTableModel getTableModelPessoas() {
+        factory = new DaoFactory();
+
+        Vector<String> titulos = new Vector<String>();
+        Vector<Object> linhas = new Vector<Object>();
+        Vector<PessoaFisica> aux = (Vector<PessoaFisica>) factory.getPessoaDao().getPessoasFisicas();
+        for (PessoaFisica pessoaFisica : aux) {
+            Vector<Object> colunas = new Vector<Object>();
+            colunas.add(pessoaFisica.getId());
+            colunas.add(pessoaFisica.getNome());
+            colunas.add(pessoaFisica.getRg());
+            colunas.add(pessoaFisica.getCpf());
+            colunas.add(pessoaFisica.getTelefoneResidencial());
+            colunas.add(pessoaFisica.getCelular());
+
+            linhas.add(colunas);
+        }
+
+        titulos.add("ID");
+        titulos.add("NOME");
+        titulos.add("RG");
+        titulos.add("CPF");
+        titulos.add("TELEFONE");
+        titulos.add("CELULAR");
+
+        return new DefaultTableModel(linhas, titulos);
     }
 
     private void cmbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSexoActionPerformed
         Sexo sexo = (Sexo) cmbSexo.getSelectedItem();
-        System.out.println(sexo);
     }//GEN-LAST:event_cmbSexoActionPerformed
+
+    private void jtblListaPessoasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtblListaPessoasMouseClicked
+        Long id = (Long) jtblListaPessoas.getValueAt(jtblListaPessoas.getSelectedRow(), 0);
+        System.out.println(id);
+    }//GEN-LAST:event_jtblListaPessoasMouseClicked
+
+    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
+        if (!cmbCidade.isEnabled() && cmbEstado.getSelectedIndex() > 0) {
+            cmbCidade.setEnabled(true);
+        } else if (cmbEstado.getSelectedIndex() <= 0) {
+            cmbCidade.setEnabled(false);
+            cmbCidade.setModel(new DefaultComboBoxModel(new String[]{"<CIDADE>"}));
+        }
+        Estado aux = (Estado) cmbEstado.getSelectedItem();
+        if (aux != null) {
+            cmbCidade.setModel(getModelCidade(aux.getSiglaUf()));
+        }
+    }//GEN-LAST:event_cmbEstadoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cmbCidade;
     private javax.swing.JComboBox cmbEstado;
@@ -526,6 +656,9 @@ public class CadPessoaPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jpContato;
     private javax.swing.JPanel jpDadosPessoa;
     private javax.swing.JPanel jpEndereco;
+    private javax.swing.JPanel jpnListagem;
+    private javax.swing.JScrollPane jspListagem;
+    private javax.swing.JTable jtblListaPessoas;
     private javax.swing.JTextField jtfBairro;
     private javax.swing.JTextField jtfCTPS;
     private javax.swing.JTextField jtfEmail;

@@ -5,8 +5,6 @@
  */
 package br.com.confronto.view;
 
-import java.awt.GridBagConstraints;
-
 /**
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
@@ -36,8 +34,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         itemCadPessoa = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("confronto"); // NOI18N
-        setTitle(bundle.getString("TITULO_CONFRONTO_FRM")); // NOI18N
+        setTitle("Confronto v1.0.0");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(900, 600));
         setName("frmPrincipal"); // NOI18N

@@ -1,7 +1,11 @@
 package br.com.confronto.dao.factory;
 
 import br.com.confronto.control.util.LogControl;
+import br.com.confronto.dao.CidadeDao;
+import br.com.confronto.dao.EstadoCivilDao;
+import br.com.confronto.dao.EstadoDao;
 import br.com.confronto.dao.PessoaDao;
+import br.com.confronto.dao.ProfissaoDao;
 import br.com.confronto.dao.SexoDao;
 import br.com.confronto.dao.TipoDao;
 import java.sql.Connection;
@@ -16,7 +20,6 @@ import java.util.logging.Level;
  */
 public class DaoFactory {
 
-    private final ResourceBundle LOG_PROP = ResourceBundle.getBundle("log");
     private final ResourceBundle BD_PROP = ResourceBundle.getBundle("config");
     private final String driver = BD_PROP.getString("DRIVER_BD");
     private final String nome = BD_PROP.getString("NOME_BD");
@@ -61,5 +64,21 @@ public class DaoFactory {
 
     public TipoDao getTipoDao() {
         return new TipoDao(connection);
+    }
+
+    public EstadoCivilDao getEstadoCivilDao() {
+        return new EstadoCivilDao(connection);
+    }
+
+    public ProfissaoDao getProfissaoDao() {
+        return new ProfissaoDao(connection);
+    }
+
+    public EstadoDao getEstadoDao() {
+        return new EstadoDao(connection);
+    }
+
+    public CidadeDao getCidadeDao() {
+        return new CidadeDao(connection);
     }
 }
