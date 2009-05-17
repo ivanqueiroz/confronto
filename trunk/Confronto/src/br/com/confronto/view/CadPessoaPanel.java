@@ -6,7 +6,6 @@
 package br.com.confronto.view;
 
 import br.com.confronto.control.Controlador;
-import br.com.confronto.dao.DaoFactory;
 import br.com.confronto.model.vo.Cidade;
 import br.com.confronto.model.vo.Estado;
 import br.com.confronto.model.vo.EstadoCivil;
@@ -28,7 +27,6 @@ import javax.swing.table.DefaultTableModel;
 public class CadPessoaPanel extends javax.swing.JPanel {
 
     private static final long serialVersionUID = 1L;
-    private DaoFactory factory = null;
 
     /** Creates new form CadPessoaPanel */
     public CadPessoaPanel() {
