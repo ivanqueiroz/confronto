@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Vector;
 
 /**
@@ -17,10 +16,8 @@ import java.util.Vector;
 public class PessoaFisicaDao extends AbstractDao {
 
     private Connection connection;
-    private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
     private final String SQL_INSERT_PF = "INSERT INTO PUBLIC.TBPESSOA (NOME, RUA, ESTADO, CIDADE, CEP, RG, CPF, PIS, CTPS, PROFISSAO, NACIONALIDADE, SEXO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String SQL_SELECT = "SELECT P.ID, P.NOME, P.ENDERECO, P.ESTADO, P.CIDADE, P.CEP, P.RG, P.CPF, P.PIS, P.CTPS, P.PROFISSAO, P.NACIONALIDADE, P.SEXO, P.TIPO, T.TIPO, P.BAIRRO, P.ESTADOCIVIL, EC.ESTADOCIVIL, P.PAI, P.MAE, P.EMAIL, P.TELEFONEFIXO, P.CELULAR, P.FAX, P.COMERCIAL FROM TBPESSOA P LEFT JOIN TBESTADOCIVIL EC ON P.ESTADOCIVIL = EC.ID LEFT JOIN TBTIPO T ON P.TIPO = T.ID WHERE TIPOPESSOA = 0";
-    private final String SQL_SELECT_ID = SQL_PROP.getString("TBPESSOA_SELECT_ID");
 
     public PessoaFisicaDao(Connection connection) {
         this.connection = connection;
