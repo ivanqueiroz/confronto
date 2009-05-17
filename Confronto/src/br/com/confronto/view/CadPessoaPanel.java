@@ -5,7 +5,8 @@
  */
 package br.com.confronto.view;
 
-import br.com.confronto.dao.factory.DaoFactory;
+import br.com.confronto.control.Controlador;
+import br.com.confronto.dao.DaoFactory;
 import br.com.confronto.model.vo.Cidade;
 import br.com.confronto.model.vo.Estado;
 import br.com.confronto.model.vo.EstadoCivil;
@@ -261,7 +262,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                 .addGroup(jpDadosPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfMae, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMae))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jpEndereco.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
@@ -495,7 +496,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         jpnListagemLayout.setVerticalGroup(
             jpnListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnListagemLayout.createSequentialGroup()
-                .addComponent(jspListagem, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                .addComponent(jspListagem, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -503,10 +504,10 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jpnListagem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpnListagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpDadosPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -519,13 +520,13 @@ public class CadPessoaPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpContato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jpDadosPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(61, 61, 61)
                 .addComponent(jpnListagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -539,8 +540,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
     public DefaultComboBoxModel getModelTipo() {
         DefaultComboBoxModel modelTipo = null;
-        factory = new DaoFactory();
-        Vector<TipoCliente> listaCombo = (Vector<TipoCliente>) factory.getTipoDao().getTipos();
+        Vector<TipoCliente> listaCombo = Controlador.getInstancia().getListaTipoCliente();
         if (listaCombo != null) {
             modelTipo = new DefaultComboBoxModel(listaCombo);
         }
@@ -549,8 +549,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
     public DefaultComboBoxModel getModelProfissao() {
         DefaultComboBoxModel modelProfissao = null;
-        factory = new DaoFactory();
-        Vector<Profissao> listaCombo = (Vector<Profissao>) factory.getProfissaoDao().getProfissoes();
+        Vector<Profissao> listaCombo = Controlador.getInstancia().getListaProfissoes();
         if (listaCombo != null) {
             modelProfissao = new DefaultComboBoxModel(listaCombo);
         }
@@ -559,8 +558,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
     public DefaultComboBoxModel getModelEstadoCivil() {
         DefaultComboBoxModel modelEstadoCivil = null;
-        factory = new DaoFactory();
-        Vector<EstadoCivil> listaCombo = (Vector<EstadoCivil>) factory.getEstadoCivilDao().getLista();
+        Vector<EstadoCivil> listaCombo = Controlador.getInstancia().getListaEstadosCivis();
         if (listaCombo != null) {
             modelEstadoCivil = new DefaultComboBoxModel(listaCombo);
         }
@@ -569,8 +567,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
     public DefaultComboBoxModel getModelEstado() {
         DefaultComboBoxModel modelEstado = null;
-        factory = new DaoFactory();
-        Vector<Estado> listaCombo = (Vector<Estado>) factory.getEstadoDao().getEstados();
+        Vector<Estado> listaCombo = Controlador.getInstancia().getListaEstados();
         Collections.sort(listaCombo, new EstadoComparator());
         if (listaCombo != null) {
             modelEstado = new DefaultComboBoxModel(listaCombo);
@@ -580,8 +577,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
     public DefaultComboBoxModel getModelCidade(String siglaUf) {
         DefaultComboBoxModel modelCidade = null;
-        factory = new DaoFactory();
-        Vector<Cidade> listaCombo = (Vector<Cidade>) factory.getCidadeDao().getCidadesPorEstado(siglaUf);
+        Vector<Cidade> listaCombo = Controlador.getInstancia().getListaCidadesByUf(siglaUf);
         Collections.sort(listaCombo, new CidadeComparator());
         if (listaCombo != null) {
             modelCidade = new DefaultComboBoxModel(listaCombo);
@@ -590,11 +586,9 @@ public class CadPessoaPanel extends javax.swing.JPanel {
     }
 
     public DefaultTableModel getTableModelPessoas() {
-        factory = new DaoFactory();
-
         Vector<String> titulos = new Vector<String>();
         Vector<Object> linhas = new Vector<Object>();
-        Vector<PessoaFisica> aux = (Vector<PessoaFisica>) factory.getPessoaDao().getPessoasFisicas();
+        Vector<PessoaFisica> aux = Controlador.getInstancia().getListaPessoasFisicas();
         for (PessoaFisica pessoaFisica : aux) {
             Vector<Object> colunas = new Vector<Object>();
             colunas.add(pessoaFisica.getId());

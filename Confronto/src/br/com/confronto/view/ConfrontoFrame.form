@@ -12,9 +12,6 @@
             <Property name="mnemonic" type="int" value="67"/>
             <Property name="text" type="java.lang.String" value="Controle"/>
           </Properties>
-          <Events>
-            <EventHandler event="menuKeyTyped" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="menuControleMenuKeyTyped"/>
-          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemCadPessoa">
               <Properties>
@@ -29,7 +26,6 @@
                 <Property name="toolTipText" type="java.lang.String" value="Cadastro de Pessoas"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="itemCadPessoaMouseClicked"/>
                 <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="itemCadPessoaMouseEntered"/>
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="itemCadPessoaMouseExited"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemCadPessoaActionPerformed"/>
