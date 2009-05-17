@@ -1,6 +1,6 @@
 package br.com.confronto.dao;
 
-import br.com.confronto.control.util.LogControl;
+import br.com.confronto.util.LogControl;
 import br.com.confronto.model.vo.Sexo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,6 @@ public class SexoDao {
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
     private final String SQL_SELECT = SQL_PROP.getString("TBSEXO_SELECT");
-    private final LogControl log = new LogControl();
 
     public SexoDao(Connection connection) {
         this.connection = connection;
@@ -43,20 +42,20 @@ public class SexoDao {
                 lista.add(vo);
             }
         } catch (SQLException ex) {
-            log.toLog(this.getClass(),"Erro ao obter lista de sexo: "+ ex.getMessage(), Level.SEVERE);
+            LogControl.getInstancia().toLog(this.getClass(),"Erro ao obter lista de sexo: "+ ex.getMessage(), Level.SEVERE);
         } finally{
             if(ps!=null){
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    log.toLog(this.getClass(),"Erro ao obter fechar Prepared Statement: "+ex.getMessage(), Level.SEVERE);
+                    LogControl.getInstancia().toLog(this.getClass(),"Erro ao obter fechar Prepared Statement: "+ex.getMessage(), Level.SEVERE);
                 }
             }
             if(rs!=null){
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    log.toLog(this.getClass(), "Erro ao fechar result set: "+ex.getMessage(), Level.SEVERE);
+                    LogControl.getInstancia().toLog(this.getClass(), "Erro ao fechar result set: "+ex.getMessage(), Level.SEVERE);
                 }
             }
         }

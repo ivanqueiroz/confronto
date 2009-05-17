@@ -5,6 +5,10 @@
  */
 package br.com.confronto.view;
 
+import br.com.confronto.control.Controlador;
+import br.com.confronto.util.LogControl;
+import java.util.logging.Level;
+
 /**
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
@@ -50,15 +54,6 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         menuControle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/wrench.png"))); // NOI18N
         menuControle.setMnemonic('C');
         menuControle.setText("Controle");
-        menuControle.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
-            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
-            }
-            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
-            }
-            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
-                menuControleMenuKeyTyped(evt);
-            }
-        });
 
         itemCadPessoa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
         itemCadPessoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/confronto/resources/user.png"))); // NOI18N
@@ -66,9 +61,6 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         itemCadPessoa.setText("Pessoas");
         itemCadPessoa.setToolTipText("Cadastro de Pessoas");
         itemCadPessoa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                itemCadPessoaMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 itemCadPessoaMouseEntered(evt);
             }
@@ -90,15 +82,8 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuControleMenuKeyTyped(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_menuControleMenuKeyTyped
-        // TODO add your handling code here:
-}//GEN-LAST:event_menuControleMenuKeyTyped
-
-    private void itemCadPessoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemCadPessoaMouseClicked
-    }//GEN-LAST:event_itemCadPessoaMouseClicked
-
     private void itemCadPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadPessoaActionPerformed
-        jplShow.add(new CadPessoaPanel());
+        jplShow.add(Controlador.getInstancia().getCadPessoaPanel());
         this.getRootPane().validate();
         statusLabel.setText(null);
 
@@ -112,27 +97,7 @@ public class ConfrontoFrame extends javax.swing.JFrame {
         statusLabel.setText(null);
     }//GEN-LAST:event_itemCadPessoaMouseExited
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
 
-            public void run() {
-                try {
-                    //javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-                    javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-
-
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-
-
-                new ConfrontoFrame().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JMenuBar barraMenuPrincipal;
     javax.swing.JMenuItem itemCadPessoa;

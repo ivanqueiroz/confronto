@@ -1,6 +1,6 @@
 package br.com.confronto.dao;
 
-import br.com.confronto.control.util.LogControl;
+import br.com.confronto.util.LogControl;
 import br.com.confronto.model.vo.Profissao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,8 +23,7 @@ public class ProfissaoDao {
     private final String SQL_APAGAR = SQL_PROP.getString("TBPROFISSAO_DELETE");
     private final String SQL_ATUALIZAR = SQL_PROP.getString("TBPROFISSAO_UPDATE");
     private final String SQL_LISTAR = SQL_PROP.getString("TBPROFISSAO_SELECT");
-    private final LogControl log = new LogControl();
-
+    
     public ProfissaoDao(Connection connection) {
         this.connection = connection;
     }
@@ -46,27 +45,27 @@ public class ProfissaoDao {
                 profissoes.add(aux);
             }
         } catch (SQLException ex) {
-            log.toLog(this.getClass(), "Erro ao executar listagem de profissoes: " + ex.getMessage(), Level.SEVERE);
+            LogControl.getInstancia().toLog(this.getClass(), "Erro ao executar listagem de profissoes: " + ex.getMessage(), Level.SEVERE);
         } finally {
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException ex) {
-                    log.toLog(this.getClass(), "Erro ao fechar connection: " + ex.getMessage(), Level.SEVERE);
+                    LogControl.getInstancia().toLog(this.getClass(), "Erro ao fechar connection: " + ex.getMessage(), Level.SEVERE);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    log.toLog(this.getClass(), "Erro ao fechar Prepared Statement: " + ex.getMessage(), Level.SEVERE);
+                    LogControl.getInstancia().toLog(this.getClass(), "Erro ao fechar Prepared Statement: " + ex.getMessage(), Level.SEVERE);
                 }
             }
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    log.toLog(this.getClass(), "Erro ao fechar result set: " + ex.getMessage(), Level.SEVERE);
+                    LogControl.getInstancia().toLog(this.getClass(), "Erro ao fechar result set: " + ex.getMessage(), Level.SEVERE);
                 }
             }
         }

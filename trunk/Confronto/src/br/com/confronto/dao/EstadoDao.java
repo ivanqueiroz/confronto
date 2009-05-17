@@ -1,6 +1,6 @@
 package br.com.confronto.dao;
 
-import br.com.confronto.control.util.LogControl;
+import br.com.confronto.util.LogControl;
 import br.com.confronto.model.vo.Estado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +23,6 @@ public class EstadoDao {
     private final String SQL_APAGAR = SQL_PROP.getString("TBESTADO_DELETE");
     private final String SQL_ATUALIZAR = SQL_PROP.getString("TBESTADO_UPDATE");
     private final String SQL_LISTAR = SQL_PROP.getString("TBESTADO_SELECT");
-    private final LogControl log = new LogControl();
 
     public EstadoDao(Connection connection) {
         this.connection = connection;
@@ -48,27 +47,27 @@ public class EstadoDao {
                 estados.add(aux);
             }
         } catch (SQLException ex) {
-            log.toLog(this.getClass(), "Erro ao executar listagem de estados: " + ex.getMessage(), Level.SEVERE);
+            LogControl.getInstancia().toLog(this.getClass(), "Erro ao executar listagem de estados: " + ex.getMessage(), Level.SEVERE);
         } finally {
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException ex) {
-                    log.toLog(this.getClass(), "Erro ao fechar connection: " + ex.getMessage(), Level.SEVERE);
+                    LogControl.getInstancia().toLog(this.getClass(), "Erro ao fechar connection: " + ex.getMessage(), Level.SEVERE);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    log.toLog(this.getClass(), "Erro ao fechar Prepared Statement: " + ex.getMessage(), Level.SEVERE);
+                    LogControl.getInstancia().toLog(this.getClass(), "Erro ao fechar Prepared Statement: " + ex.getMessage(), Level.SEVERE);
                 }
             }
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    log.toLog(this.getClass(), "Erro ao fechar result set: " + ex.getMessage(), Level.SEVERE);
+                    LogControl.getInstancia().toLog(this.getClass(), "Erro ao fechar result set: " + ex.getMessage(), Level.SEVERE);
                 }
             }
         }
