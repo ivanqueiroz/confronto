@@ -16,7 +16,6 @@ import java.util.Vector;
 public class PessoaFisicaDao extends AbstractDao {
 
     private Connection connection;
-    private final String SQL_INSERT_PF = "INSERT INTO PUBLIC.TBPESSOA (NOME, RUA, ESTADO, CIDADE, CEP, RG, CPF, PIS, CTPS, PROFISSAO, NACIONALIDADE, SEXO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String SQL_SELECT = "SELECT P.ID, P.NOME, P.ENDERECO, P.ESTADO, P.CIDADE, P.CEP, P.RG, P.CPF, P.PIS, P.CTPS, P.PROFISSAO, P.NACIONALIDADE, P.SEXO, P.TIPO, T.TIPO, P.BAIRRO, P.ESTADOCIVIL, EC.ESTADOCIVIL, P.PAI, P.MAE, P.EMAIL, P.TELEFONEFIXO, P.CELULAR, P.FAX, P.COMERCIAL FROM TBPESSOA P LEFT JOIN TBESTADOCIVIL EC ON P.ESTADOCIVIL = EC.ID LEFT JOIN TBTIPO T ON P.TIPO = T.ID WHERE TIPOPESSOA = 0";
 
     public PessoaFisicaDao(Connection connection) {
@@ -26,11 +25,94 @@ public class PessoaFisicaDao extends AbstractDao {
     @Override
     public void apagar(Object o) throws DaoException {
         super.apagar(o);
+        PreparedStatement ps = null;
+        if (o != null && o instanceof Long) {
+            Long id = (Long) o;
+            final String SQL_DELETE = "DELETE FROM PUBLIC.TBPESSOA WHERE ID = ?";
+            try {
+                ps = connection.prepareStatement(SQL_DELETE);
+                ps.setLong(1, id);
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                throw new DaoException("Erro ao apagar pessoa: ", ex);
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException ex) {
+                        throw new DaoException("Erro ao fechar connection em apagar pessoa: ", ex);
+                    }
+                }
+                if (ps != null) {
+                    try {
+                        ps.close();
+                    } catch (SQLException ex) {
+                        throw new DaoException("Erro ao fechar PreparedStatement em apagar pessoa: ", ex);
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void atualizar(Object o) throws DaoException {
         super.atualizar(o);
+        PreparedStatement ps = null;
+        if (o != null && o instanceof PessoaFisica) {
+            PessoaFisica pessoa = (PessoaFisica) o;
+
+           StringBuilder sql = new StringBuilder("UPDATE TBPESSOA ");
+           sql.append("SET NOME=?, ENDERECO=?, ESTADO=?, CIDADE=?, CEP=?, RG=?, CPF=?,");
+           sql.append("PIS=?, CTPS=?, PROFISSAO=?, NACIONALIDADE=?, SEXO=?, TIPO=?,");
+           sql.append("BAIRRO=?, ESTADOCIVIL=?, PAI=?, MAE=?, EMAIL=?, TELEFONEFIXO=?,");
+           sql.append("CELULAR=?, FAX=?, COMERCIAL=?, TIPOPESSOA=? ");
+           sql.append("WHERE ID=?");
+
+            try {
+                ps = connection.prepareStatement(sql.toString());
+                ps.setString(1, pessoa.getNome());
+                ps.setString(2, pessoa.getRua());
+                ps.setString(3, pessoa.getEstado());
+                ps.setString(4, pessoa.getCidade());
+                ps.setString(5, pessoa.getCep());
+                ps.setString(6, pessoa.getRg());
+                ps.setString(7, pessoa.getPis());
+                ps.setString(8, pessoa.getCtps());
+                ps.setString(9, pessoa.getProfissao());
+                ps.setString(10, pessoa.getNacionalidade());
+                ps.setLong(11, pessoa.getSexo().getId());
+                ps.setLong(12, pessoa.getTipoCliente().getId());
+                ps.setString(13, pessoa.getBairro());
+                ps.setLong(14, pessoa.getEstadoCivil().getId());
+                ps.setString(15, pessoa.getPai());
+                ps.setString(16, pessoa.getMae());
+                ps.setString(17, pessoa.getEmail());
+                ps.setString(18, pessoa.getTelefoneResidencial());
+                ps.setString(19, pessoa.getCelular());
+                ps.setString(20, pessoa.getFax());
+                ps.setString(21, pessoa.getTelefoneComercial());
+                ps.setLong(22, 0);
+                ps.setLong(23, pessoa.getId());
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                throw new DaoException("Erro ao atualizar pessoa: ", ex);
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException ex) {
+                        throw new DaoException("Erro ao fechar connection em atualizar pessoa: ", ex);
+                    }
+                }
+                if (ps != null) {
+                    try {
+                        ps.close();
+                    } catch (SQLException ex) {
+                        throw new DaoException("Erro ao fechar PreparedStatement em atualizar pessoa: ", ex);
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -38,9 +120,12 @@ public class PessoaFisicaDao extends AbstractDao {
         super.inserir(o);
         PreparedStatement ps = null;
         if (o != null && o instanceof PessoaFisica) {
+            StringBuilder sql = new StringBuilder("INSERT INTO PUBLIC.TBPESSOA ");
+            sql.append("(NOME, RUA, ESTADO, CIDADE, CEP, RG, CPF, PIS, CTPS, PROFISSAO, NACIONALIDADE, SEXO) ");
+            sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             PessoaFisica pf = (PessoaFisica) o;
             try {
-                ps = connection.prepareStatement(SQL_INSERT_PF);
+                ps = connection.prepareStatement(sql.toString());
 
                 ps.setString(1, pf.getNome());
                 ps.setString(2, pf.getRua());
@@ -81,7 +166,7 @@ public class PessoaFisicaDao extends AbstractDao {
         StringBuilder sql = new StringBuilder("SELECT P.ID, P.NOME, P.ENDERECO, P.ESTADO, P.CIDADE, P.CEP, P.RG, P.CPF, P.PIS, P.CTPS, P.PROFISSAO, P.NACIONALIDADE, P.SEXO, P.TIPO, T.TIPO, P.BAIRRO, P.ESTADOCIVIL, EC.ESTADOCIVIL, P.PAI, P.MAE, P.EMAIL, P.TELEFONEFIXO, P.CELULAR, P.FAX, P.COMERCIAL ");
         sql.append("FROM TBPESSOA P LEFT JOIN TBESTADOCIVIL EC ON P.ESTADOCIVIL = EC.ID LEFT JOIN TBTIPO T ON P.TIPO = T.ID ");
         sql.append("WHERE P.TIPOPESSOA = 0 AND P.ID = ?");
-        
+
         if (o != null && o instanceof Long) {
             Long id = (Long) o;
             PessoaFisica aux = new PessoaFisica();
@@ -237,6 +322,4 @@ public class PessoaFisicaDao extends AbstractDao {
         }
         return lista;
     }
-
-
 }
