@@ -14,7 +14,6 @@ import br.com.confronto.view.ConfrontoFrame;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jvnet.substance.skin.SubstanceBusinessLookAndFeel;
 
 /**
  *
@@ -88,7 +87,8 @@ public class Controlador {
                 try {
                     //javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                     //javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-                    javax.swing.UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
+
+                    javax.swing.UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceBusinessLookAndFeel");
                 } catch (Exception e) {
                     LogControl.getInstancia().toLog(this.getClass(), "Erro ao inicializar o sistema " + e.getMessage(), Level.SEVERE);
                 }
