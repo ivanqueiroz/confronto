@@ -4,7 +4,6 @@ import br.com.confronto.util.LogControl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 /**
@@ -13,15 +12,10 @@ import java.util.logging.Level;
  */
 public class DaoFactory {
 
-    private final ResourceBundle BD_PROP = ResourceBundle.getBundle("config");
-    private final String driver = BD_PROP.getString("DRIVER_BD");
-    private final String nome = BD_PROP.getString("NOME_BD");
-    private final String url = BD_PROP.getString("URL_BD");
-    private final String host = BD_PROP.getString("HOST_BD");
-    private final String porta = BD_PROP.getString("PORTA_BD");
-    private final String usuario = BD_PROP.getString("LOGIN_BD");
-    private final String senha = BD_PROP.getString("SENHA_BD");
-    private final String strCon = url + "://" + host + ":" + porta + "/" + nome;
+    private final String driver = "org.h2.Driver";
+    private final String url = "jdbc:h2:file:../ConfrontoDB/confronto";
+    private final String usuario = "confronto";
+    private final String senha = "admin123";
     private static final DaoFactory instancia = new DaoFactory();
     private Connection connection;
 
@@ -41,7 +35,7 @@ public class DaoFactory {
     private boolean conecta() {
         boolean conectou = false;
         try {
-            connection = DriverManager.getConnection(strCon, usuario, senha);
+            connection = DriverManager.getConnection(url, usuario, senha);
             conectou = true;
         } catch (SQLException ex) {
             LogControl.getInstancia().toLog(this.getClass(), "Erro ao obter connection : " + ex.getMessage(), Level.SEVERE);
@@ -103,5 +97,11 @@ public class DaoFactory {
             cidadeDao = new CidadeDao(connection);
         }
         return cidadeDao;
+    }
+
+    public static void main(String[] args) {
+        DaoFactory d = DaoFactory.getInstancia();
+        d.conecta();
+
     }
 }
