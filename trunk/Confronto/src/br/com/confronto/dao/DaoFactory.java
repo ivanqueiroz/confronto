@@ -99,9 +99,4 @@ public class DaoFactory {
         return cidadeDao;
     }
 
-    public static void main(String[] args) {
-        DaoFactory d = DaoFactory.getInstancia();
-        d.conecta();
-
-    }
 }
