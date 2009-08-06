@@ -16,7 +16,12 @@ import java.util.Vector;
 public class PessoaFisicaDao extends AbstractDao {
 
     private Connection connection;
-    private final String SQL_SELECT = "SELECT P.ID, P.NOME, P.ENDERECO, P.ESTADO, P.CIDADE, P.CEP, P.RG, P.CPF, P.PIS, P.CTPS, P.PROFISSAO, P.NACIONALIDADE, P.SEXO, P.TIPO, T.TIPO, P.BAIRRO, P.ESTADOCIVIL, EC.ESTADOCIVIL, P.PAI, P.MAE, P.EMAIL, P.TELEFONEFIXO, P.CELULAR, P.FAX, P.COMERCIAL FROM TBPESSOA P LEFT JOIN TBESTADOCIVIL EC ON P.ESTADOCIVIL = EC.ID LEFT JOIN TBTIPO T ON P.TIPO = T.ID WHERE TIPOPESSOA = 0";
+    private final String SQL_SELECT = "SELECT P.ID, P.NOME, P.ENDERECO, P.ESTADO, " +
+            "P.CIDADE, P.CEP, P.RG, P.CPF, P.PIS, P.CTPS, P.PROFISSAO, P.NACIONALIDADE, " +
+            "P.SEXO, P.TIPOCLIENTE, T.TIPOCLIENTE, P.BAIRRO, P.ESTADOCIVIL, EC.ESTADOCIVIL, P.PAI, P.MAE, " +
+            "P.EMAIL, P.TELEFONEFIXO, P.CELULAR, P.FAX, P.COMERCIAL FROM TBPESSOA P " +
+            "LEFT JOIN TBESTADOCIVIL EC ON P.ESTADOCIVIL = EC.ID " +
+            "LEFT JOIN TBTIPOCLIENTE T ON P.TIPOCLIENTE = T.ID WHERE TIPOPESSOA = 0";
 
     public PessoaFisicaDao(Connection connection) {
         this.connection = connection;
@@ -61,12 +66,12 @@ public class PessoaFisicaDao extends AbstractDao {
         if (o != null && o instanceof PessoaFisica) {
             PessoaFisica pessoa = (PessoaFisica) o;
 
-           StringBuilder sql = new StringBuilder("UPDATE TBPESSOA ");
-           sql.append("SET NOME=?, ENDERECO=?, ESTADO=?, CIDADE=?, CEP=?, RG=?, CPF=?,");
-           sql.append("PIS=?, CTPS=?, PROFISSAO=?, NACIONALIDADE=?, SEXO=?, TIPO=?,");
-           sql.append("BAIRRO=?, ESTADOCIVIL=?, PAI=?, MAE=?, EMAIL=?, TELEFONEFIXO=?,");
-           sql.append("CELULAR=?, FAX=?, COMERCIAL=?, TIPOPESSOA=? ");
-           sql.append("WHERE ID=?");
+            StringBuilder sql = new StringBuilder("UPDATE TBPESSOA ");
+            sql.append("SET NOME=?, ENDERECO=?, ESTADO=?, CIDADE=?, CEP=?, RG=?, CPF=?,");
+            sql.append("PIS=?, CTPS=?, PROFISSAO=?, NACIONALIDADE=?, SEXO=?, TIPO=?,");
+            sql.append("BAIRRO=?, ESTADOCIVIL=?, PAI=?, MAE=?, EMAIL=?, TELEFONEFIXO=?,");
+            sql.append("CELULAR=?, FAX=?, COMERCIAL=?, TIPOPESSOA=? ");
+            sql.append("WHERE ID=?");
 
             try {
                 ps = connection.prepareStatement(sql.toString());
