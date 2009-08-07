@@ -4,6 +4,7 @@ import br.com.confronto.util.LogControl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 /**
@@ -11,9 +12,10 @@ import java.util.logging.Level;
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
 public class DaoFactory {
-
+    ResourceBundle propriedades = ResourceBundle.getBundle("confronto");
+    
     private final String driver = "org.h2.Driver";
-    private final String url = "jdbc:h2:file:../ConfrontoDB/confronto";
+    private final String url = "jdbc:h2:tcp://"+propriedades.getString("IP")+"/~/confronto";
     private final String usuario = "confronto";
     private final String senha = "admin123";
     private static final DaoFactory instancia = new DaoFactory();
