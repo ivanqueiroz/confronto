@@ -1,10 +1,13 @@
 package br.com.confronto.dao;
 
+import br.com.confronto.util.ConfigControl;
+import br.com.confronto.util.Criptografia;
 import br.com.confronto.util.LogControl;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 /**
@@ -12,10 +15,10 @@ import java.util.logging.Level;
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
 public class DaoFactory {
-    ResourceBundle propriedades = ResourceBundle.getBundle("confronto");
+
     
     private final String driver = "org.h2.Driver";
-    private final String url = "jdbc:h2:tcp://"+propriedades.getString("IP")+"/~/confronto";
+    private final String url = "jdbc:h2:tcp://"+ConfigControl.getInstancia().carregaPropriedade("IP")+"/~/confronto";
     private final String usuario = "confronto";
     private final String senha = "admin123";
     private static final DaoFactory instancia = new DaoFactory();
@@ -99,6 +102,15 @@ public class DaoFactory {
             cidadeDao = new CidadeDao(connection);
         }
         return cidadeDao;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        /*ConfigControl.getInstancia().salvarPropriedade("user", "confronto");
+        ConfigControl.getInstancia().salvarPropriedade("ip", "192.168.0.108");
+        ConfigControl.getInstancia().salvarPropriedade("password", Criptografia.encripta("admin123"));*/
+        System.out.println(Criptografia.decripta(ConfigControl.getInstancia().carregaPropriedade("password")));
+        //System.out.println(Criptografia.decripta("e����=��%�C�".getBytes()));
+        
     }
 
 }
