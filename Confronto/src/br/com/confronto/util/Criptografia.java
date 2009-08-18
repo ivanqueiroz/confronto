@@ -1,10 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.confronto.util;
 
-import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -22,7 +17,7 @@ import javax.crypto.spec.DESedeKeySpec;
  */
 public class Criptografia {
 
-    private final static String chave = "XJKASDOIASDOKKOKKLLSA788";
+    private final static String chave = "c0nfr0nt0@4b4c4x1D0G1ls0n";
     private static SecretKey chaveSecreta;
     private static Cipher cipher = null;
     private static Criptografia cript = new Criptografia();

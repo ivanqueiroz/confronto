@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package br.com.confronto.util;
 
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +34,7 @@ public class ConfigControl {
         Boolean resultado = Boolean.FALSE;
         config.setProperty(chave, valor);
         try {
-            config.store(new PrintWriter(arquivoIni), null);
+            config.store(new FileWriter(arquivoIni), null);
             resultado = Boolean.TRUE;
         } catch (IOException ex) {
             Logger.getLogger(ConfigControl.class.getName()).log(Level.SEVERE, null, ex);
