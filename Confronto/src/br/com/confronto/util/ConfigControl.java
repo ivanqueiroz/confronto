@@ -1,7 +1,7 @@
 package br.com.confronto.util;
 
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -17,7 +17,7 @@ public class ConfigControl {
     private static ConfigControl instancia = new ConfigControl();
     private final String arquivoIni = "../Config/confronto.ini";
 
-    private ConfigControl(){
+    private ConfigControl() {
         try {
             config.load(new FileInputStream(arquivoIni));
         } catch (IOException ex) {
@@ -26,15 +26,15 @@ public class ConfigControl {
 
     }
 
-    public static ConfigControl getInstancia(){
+    public static ConfigControl getInstancia() {
         return instancia;
     }
 
-    public Boolean salvarPropriedade(String chave, String valor){
+    public Boolean salvarPropriedade(String chave, String valor) {
         Boolean resultado = Boolean.FALSE;
         config.setProperty(chave, valor);
         try {
-            config.store(new FileWriter(arquivoIni), null);
+            config.store(new FileOutputStream(arquivoIni), null);
             resultado = Boolean.TRUE;
         } catch (IOException ex) {
             Logger.getLogger(ConfigControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,10 +42,12 @@ public class ConfigControl {
         return resultado;
     }
 
-    public String carregaPropriedade(String chave){
-        return config.getProperty(chave);
+    public String carregaPropriedade(String chave) {
+        String p = config.getProperty(chave);
+        if (p != null) {
+            System.out.println(p.indexOf("\r\n"));
+            p = p.replace("\r", "");
+        }
+        return p;
     }
-
-
-
 }

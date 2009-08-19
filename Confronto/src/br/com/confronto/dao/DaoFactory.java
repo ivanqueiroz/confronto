@@ -1,6 +1,5 @@
 package br.com.confronto.dao;
 
-import br.com.confronto.security.Encriptador;
 import br.com.confronto.util.ConfigControl;
 import br.com.confronto.util.Criptografia;
 import br.com.confronto.util.LogControl;
@@ -8,15 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 /**
  *
@@ -114,20 +110,8 @@ public class DaoFactory {
     public static void main(String[] args) throws FileNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         ConfigControl.getInstancia().salvarPropriedade("user", "confronto");
         ConfigControl.getInstancia().salvarPropriedade("ip", "192.168.0.108");
-            //ConfigControl.getInstancia().salvarPropriedade("password", Encriptador.newInstance().encripita("admin123"));
-            //ConfigControl.getInstancia().salvarPropriedade("password", Criptografia.encripta("admin123"));
-            //System.out.println(Encriptador.newInstance().desencripta(ConfigControl.getInstancia().carregaPropriedade("password")));
-            System.out.println(Criptografia.decripta(ConfigControl.getInstancia().carregaPropriedade("password")));
-            //System.out.println(Criptografia.decripta("e����=��%�C�".getBytes()));
-        /*} catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(DaoFactory.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoSuchPaddingException ex) {
-            Logger.getLogger(DaoFactory.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(DaoFactory.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();*/
-        //System.out.println(Criptografia.decripta(ConfigControl.getInstancia().carregaPropriedade("password")));
-        //System.out.println(Criptografia.decripta("e����=��%�C�".getBytes()));
-
+        ConfigControl.getInstancia().salvarPropriedade("password", Criptografia.encripta("admin123"));
+        System.out.println(ConfigControl.getInstancia().carregaPropriedade("password"));
+        System.out.println(Criptografia.decripta(ConfigControl.getInstancia().carregaPropriedade("password")));
     }
 }
