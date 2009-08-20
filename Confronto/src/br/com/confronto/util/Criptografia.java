@@ -21,11 +21,7 @@ public class Criptografia {
     private static SecretKey chaveSecreta;
     private static Cipher cipher = null;
     private static Criptografia cript = new Criptografia();
-    private static char[] hexChar = {
-        '0', '1', '2', '3',
-        '4', '5', '6', '7',
-        '8', '9', 'a', 'b',
-        'c', 'd', 'e', 'f'};
+
 
     /**
      * Cria objeto Criptografia. Inicializa objeto para criptografia com
@@ -33,6 +29,7 @@ public class Criptografia {
      *
      */
     private Criptografia() {
+        
         System.out.println("Criptografia()");
         System.out.println("Construindo objeto para criptografia: " + cript);
         try {
@@ -62,7 +59,7 @@ public class Criptografia {
      * @return
      */
     public static String encripta(final String objeto) {
-        System.out.println("encripta()");
+        //System.out.println("encripta()");
         try {
             cipher.init(Cipher.ENCRYPT_MODE, chaveSecreta);
         } catch (InvalidKeyException e) {
@@ -71,9 +68,8 @@ public class Criptografia {
             return null;
         }
         try {
-            final String tmp = new String(cipher.doFinal(objeto.getBytes()));
-            System.out.println(toHexString(objeto.getBytes()));
-            System.out.println("Objeto encriptado: " + tmp);
+            System.out.println(ConfigControl.toHexString(cipher.doFinal(objeto.getBytes())));
+            //System.out.println("Objeto encriptado: " + tmp);
             return new String(cipher.doFinal(objeto.getBytes()));
         } catch (BadPaddingException e) {
             System.out.println("Erro ao encriptar dados. Padding inválido.");
@@ -92,7 +88,7 @@ public class Criptografia {
      * @return
      */
     public static String decripta(final String objeto) {
-        System.out.println("decripta()");
+        //System.out.println("decripta()");
         try {
             cipher.init(Cipher.DECRYPT_MODE, chaveSecreta);
         } catch (InvalidKeyException e) {
@@ -101,7 +97,6 @@ public class Criptografia {
             return null;
         }
         try {
-            System.out.println(toHexString(objeto.getBytes()));
             return new String(cipher.doFinal(objeto.getBytes()));
         } catch (BadPaddingException e) {
             System.out.println("Erro ao decriptar dados. Padding inválido.");
@@ -113,13 +108,5 @@ public class Criptografia {
             return null;
         }
     }
-
-    public static String toHexString(byte[] b) {
-        StringBuffer sb = new StringBuffer(b.length * 2);
-        for (int i = 0; i < b.length; i++) {
-            sb.append(hexChar[(b[i] & 0xf0) >>> 4]);
-            sb.append(hexChar[b[i] & 0x0f]);
-        }
-        return sb.toString();
-    }
+  
 }

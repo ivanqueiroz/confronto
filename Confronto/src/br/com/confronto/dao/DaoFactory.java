@@ -108,10 +108,7 @@ public class DaoFactory {
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        ConfigControl.getInstancia().salvarPropriedade("user", "confronto");
-        ConfigControl.getInstancia().salvarPropriedade("ip", "192.168.0.108");
-        ConfigControl.getInstancia().salvarPropriedade("password", Criptografia.encripta("admin123"));
-        System.out.println(ConfigControl.getInstancia().carregaPropriedade("password"));
-        System.out.println(Criptografia.decripta(ConfigControl.getInstancia().carregaPropriedade("password")));
+        ConfigControl.getInstancia().salvarPropriedadeEncriptada("password", "admin123");
+        System.out.println(ConfigControl.getInstancia().carregaPropriedadeEncriptada("password"));
     }
 }
