@@ -16,6 +16,11 @@ public class ConfigControl {
     private static Properties config = new Properties();
     private static ConfigControl instancia = new ConfigControl();
     private final String arquivoIni = "../Config/confronto.ini";
+    private static char[] hexChar = {
+        '0', '1', '2', '3',
+        '4', '5', '6', '7',
+        '8', '9', 'a', 'b',
+        'c', 'd', 'e', 'f'};
 
     private ConfigControl() {
         try {
@@ -42,12 +47,45 @@ public class ConfigControl {
         return resultado;
     }
 
+    public Boolean salvarPropriedadeEncriptada(String chave, String valor) {
+        Boolean resultado = Boolean.FALSE;
+        if(valor !=null) {
+            valor = Criptografia.encripta(valor);
+        }
+        config.setProperty(chave, valor);
+        try {
+            System.out.println("Chegou: "+toHexString(valor.getBytes()));
+            config.store(new FileOutputStream(arquivoIni), "-- Sem Comentários --");
+            resultado = Boolean.TRUE;
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultado;
+    }
+
     public String carregaPropriedade(String chave) {
         String p = config.getProperty(chave);
         if (p != null) {
-            System.out.println(p.indexOf("\r\n"));
-            p = p.replace("\r", "");
+            System.out.println("Saiu: "+toHexString(p.getBytes()));
         }
         return p;
+    }
+    public String carregaPropriedadeEncriptada(String chave) {
+        String p = config.getProperty(chave);
+        if (p != null) {
+            System.out.println("Carregado: "+toHexString(p.getBytes()));
+            p = Criptografia.decripta(p);
+            System.out.println("Saiu depois: "+toHexString(p.getBytes()));
+        }
+        return p;
+    }
+
+    public static String toHexString(byte[] b) {
+        StringBuffer sb = new StringBuffer(b.length * 2);
+        for (int i = 0; i < b.length; i++) {
+            sb.append(hexChar[(b[i] & 0xf0) >>> 4]);
+            sb.append(hexChar[b[i] & 0x0f]);
+        }
+        return sb.toString();
     }
 }
