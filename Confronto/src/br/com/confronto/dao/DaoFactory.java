@@ -1,7 +1,6 @@
 package br.com.confronto.dao;
 
 import br.com.confronto.util.ConfigControl;
-import br.com.confronto.util.Criptografia;
 import br.com.confronto.util.LogControl;
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,8 +1,12 @@
-package br.com.confronto.util;
+package br.com.confronto.security;
 
+import br.com.confronto.util.*;
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -10,6 +14,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -62,15 +68,17 @@ public class Criptografia {
         //System.out.println("encripta()");
         try {
             cipher.init(Cipher.ENCRYPT_MODE, chaveSecreta);
+
         } catch (InvalidKeyException e) {
             System.out.println("Não foi possível iniciar a criptografia. Chave inválida.");
             System.out.println("Mensagem: " + e);
             return null;
         }
         try {
+            BASE64Encoder encoder = new BASE64Encoder();
             System.out.println(ConfigControl.toHexString(cipher.doFinal(objeto.getBytes())));
             //System.out.println("Objeto encriptado: " + tmp);
-            return new String(cipher.doFinal(objeto.getBytes()));
+            return encoder.encode(cipher.doFinal(objeto.getBytes()));
         } catch (BadPaddingException e) {
             System.out.println("Erro ao encriptar dados. Padding inválido.");
             System.out.println("Mensagem: " + e);
@@ -97,7 +105,13 @@ public class Criptografia {
             return null;
         }
         try {
-            return new String(cipher.doFinal(objeto.getBytes()));
+            BASE64Decoder dec = new BASE64Decoder();
+            byte[] texto = cipher.doFinal(dec.decodeBuffer(objeto));
+            return new String(texto);
+        } catch (IOException e) {
+            System.out.println("Erro ao decriptar dados. Exceção de I/O.");
+            System.out.println("Mensagem: " + e);
+            return null;
         } catch (BadPaddingException e) {
             System.out.println("Erro ao decriptar dados. Padding inválido.");
             System.out.println("Mensagem: " + e);
