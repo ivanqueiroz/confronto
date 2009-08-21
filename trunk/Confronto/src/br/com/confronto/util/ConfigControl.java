@@ -1,5 +1,6 @@
 package br.com.confronto.util;
 
+import br.com.confronto.security.Criptografia;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
