@@ -55,8 +55,7 @@ public class ConfigControl {
         }
         config.setProperty(chave, valor);
         try {
-            System.out.println("Chegou: "+toHexString(valor.getBytes()));
-            config.store(new FileOutputStream(arquivoIni), "-- Sem Comentários --");
+            config.store(new FileOutputStream(arquivoIni), null);
             resultado = Boolean.TRUE;
         } catch (IOException ex) {
             Logger.getLogger(ConfigControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,17 +65,12 @@ public class ConfigControl {
 
     public String carregaPropriedade(String chave) {
         String p = config.getProperty(chave);
-        if (p != null) {
-            System.out.println("Saiu: "+toHexString(p.getBytes()));
-        }
         return p;
     }
     public String carregaPropriedadeEncriptada(String chave) {
         String p = config.getProperty(chave);
         if (p != null) {
-            System.out.println("Carregado: "+toHexString(p.getBytes()));
             p = Criptografia.decripta(p);
-            System.out.println("Saiu depois: "+toHexString(p.getBytes()));
         }
         return p;
     }
