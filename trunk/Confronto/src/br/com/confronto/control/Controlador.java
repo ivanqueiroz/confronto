@@ -48,7 +48,13 @@ public class Controlador {
     }
 
     public Vector<TipoCliente> getListaTipoCliente() {
-        return (Vector<TipoCliente>) DaoFactory.getInstancia().getTipoDao().getTipos();
+        Vector<TipoCliente> lista = null;
+        try {
+             lista = (Vector<TipoCliente>) DaoFactory.getInstancia().getDao("tipoCliente").obterTodos();
+        } catch (DaoException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 
     public Vector<Profissao> getListaProfissoes() {

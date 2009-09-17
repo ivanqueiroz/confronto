@@ -17,12 +17,12 @@ import javax.crypto.IllegalBlockSizeException;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class DaoFactory {
+public class DaoFactory extends AbstractFactory {
 
     private final String driver = "org.h2.Driver";
     private final String url = "jdbc:h2:tcp://" + ConfigControl.getInstancia().carregaPropriedade("IP") + "/~/confronto";
     private final String usuario = "confronto";
-    private final String senha = "admin123";
+    private final String senha = ConfigControl.getInstancia().carregaPropriedadeEncriptada("password");
     private static final DaoFactory instancia = new DaoFactory();
     private Connection connection;
 
@@ -30,8 +30,11 @@ public class DaoFactory {
 
         try {
             Class.forName(driver);
+            connection = DriverManager.getConnection(url, usuario, senha);
         } catch (ClassNotFoundException ex) {
             LogControl.getInstancia().toLog(this.getClass(), "Erro ao carregar driver: " + ex.getMessage(), Level.SEVERE);
+        } catch (SQLException ex) {
+            LogControl.getInstancia().toLog(this.getClass(), "Erro ao obter connection : " + ex.getMessage(), Level.SEVERE);
         }
     }
 
@@ -39,75 +42,34 @@ public class DaoFactory {
         return instancia;
     }
 
-    private boolean conecta() {
-        boolean conectou = false;
-        try {
-            connection = DriverManager.getConnection(url, usuario, senha);
-            conectou = true;
-        } catch (SQLException ex) {
-            LogControl.getInstancia().toLog(this.getClass(), "Erro ao obter connection : " + ex.getMessage(), Level.SEVERE);
-        }
-        return conectou;
-    }
-
-    public PessoaFisicaDao getPessoaDao() {
-        PessoaFisicaDao pessoaDao = null;
-        if (conecta()) {
-            pessoaDao = new PessoaFisicaDao(connection);
-        }
-        return pessoaDao;
-    }
-
-    public SexoDao getSexoDao() {
-        SexoDao sexoDao = null;
-        if (conecta()) {
-            sexoDao = new SexoDao(connection);
-        }
-        return sexoDao;
-    }
-
-    public TipoDao getTipoDao() {
-        TipoDao tipoDao = null;
-        if (conecta()) {
-            tipoDao = new TipoDao(connection);
-        }
-        return tipoDao;
-    }
-
-    public EstadoCivilDao getEstadoCivilDao() {
-        EstadoCivilDao estadoCivilDao = null;
-        if (conecta()) {
-            estadoCivilDao = new EstadoCivilDao(connection);
-        }
-        return estadoCivilDao;
-    }
-
-    public ProfissaoDao getProfissaoDao() {
-        ProfissaoDao profissaoDao = null;
-        if (conecta()) {
-            profissaoDao = new ProfissaoDao(connection);
-        }
-        return profissaoDao;
-    }
-
-    public EstadoDao getEstadoDao() {
-        EstadoDao estadoDao = null;
-        if (conecta()) {
-            estadoDao = new EstadoDao(connection);
-        }
-        return estadoDao;
-    }
-
-    public CidadeDao getCidadeDao() {
-        CidadeDao cidadeDao = null;
-        if (conecta()) {
-            cidadeDao = new CidadeDao(connection);
-        }
-        return cidadeDao;
-    }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        ConfigControl.getInstancia().salvarPropriedade("login", "confronto");
         ConfigControl.getInstancia().salvarPropriedadeEncriptada("password", "admin123");
         System.out.println(ConfigControl.getInstancia().carregaPropriedadeEncriptada("password"));
+    }
+
+    @Override
+    public AbstractDao getDao(String typeDao) {
+        if (connection != null && typeDao != null && typeDao.length() > 0) {
+            if (typeDao.equalsIgnoreCase("pessoa")) {
+                return new PessoaFisicaDao(connection);
+            } else if (typeDao.equalsIgnoreCase("sexo")) {
+                return new SexoDao(connection);
+            } else if (typeDao.equalsIgnoreCase("tipoCliente")) {
+                return new TipoDao(connection);
+            } else if (typeDao.equalsIgnoreCase("estadoCivil")) {
+                return new EstadoCivilDao(connection);
+            } else if (typeDao.equalsIgnoreCase("profissao")) {
+                return new ProfissaoDao(connection);
+            } else if (typeDao.equalsIgnoreCase("estado")) {
+                return new EstadoDao(connection);
+            } else if (typeDao.equalsIgnoreCase("cidade")) {
+                return new CidadeDao(connection);
+            }
+        }
+
+
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

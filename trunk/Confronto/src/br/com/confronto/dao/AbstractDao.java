@@ -6,18 +6,15 @@ import java.util.List;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public abstract class AbstractDao implements InterfaceDao{
+public abstract class AbstractDao {
 
     public void apagar(Object o) throws DaoException {
-
     }
 
     public void atualizar(Object o) throws DaoException {
-
     }
 
     public void inserir(Object o) throws DaoException {
-
     }
 
     public Object obterPorId(Object id) throws DaoException {
@@ -27,9 +24,4 @@ public abstract class AbstractDao implements InterfaceDao{
     public List obterTodos() throws DaoException {
         return null;
     }
-
-
-
-
-
 }
