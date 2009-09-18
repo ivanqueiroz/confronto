@@ -50,26 +50,9 @@ public class DaoFactory extends AbstractFactory {
     }
 
     @Override
-    public AbstractDao getDao(String typeDao) {
-        if (connection != null && typeDao != null && typeDao.length() > 0) {
-            if (typeDao.equalsIgnoreCase("pessoa")) {
-                return new PessoaFisicaDao(connection);
-            } else if (typeDao.equalsIgnoreCase("sexo")) {
-                return new SexoDao(connection);
-            } else if (typeDao.equalsIgnoreCase("tipoCliente")) {
-                return new TipoDao(connection);
-            } else if (typeDao.equalsIgnoreCase("estadoCivil")) {
-                return new EstadoCivilDao(connection);
-            } else if (typeDao.equalsIgnoreCase("profissao")) {
-                return new ProfissaoDao(connection);
-            } else if (typeDao.equalsIgnoreCase("estado")) {
-                return new EstadoDao(connection);
-            } else if (typeDao.equalsIgnoreCase("cidade")) {
-                return new CidadeDao(connection);
-            }
-        }
-
-
+    public AbstractDao getDao(Class type) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+
 }

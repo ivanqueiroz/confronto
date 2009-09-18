@@ -15,7 +15,7 @@ import java.util.logging.Level;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class TipoDao extends AbstractDao{
+public class TipoDao extends AbstractDao<TipoCliente,Long>{
 
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
