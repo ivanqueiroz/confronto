@@ -4,8 +4,8 @@ package br.com.confronto.dao;
  *
  * @author ivanqueiroz
  */
-abstract class AbstractFactory {
+abstract class AbstractFactory<T> {
 
-    public abstract AbstractDao getDao(String typeDao);
+    public abstract <T extends AbstractDao> T getDao(Class<T> type);
 
 }
