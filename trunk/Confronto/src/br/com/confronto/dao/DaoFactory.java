@@ -17,7 +17,7 @@ import javax.crypto.IllegalBlockSizeException;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class DaoFactory extends AbstractFactory {
+public class DaoFactory {
 
     private final String driver = "org.h2.Driver";
     private final String url = "jdbc:h2:tcp://" + ConfigControl.getInstancia().carregaPropriedade("IP") + "/~/confronto";
@@ -42,17 +42,32 @@ public class DaoFactory extends AbstractFactory {
         return instancia;
     }
 
+    public AbstractDao getDao(EnumTipoDao tipoDao) {
+        switch (tipoDao) {
+            case CIDADE:
+                return new CidadeDao(connection);
+            case ESTADO:
+                return new EstadoDao(connection);
+            case ESTADOCIVIL:
+                return new EstadoCivilDao(connection);
+            case PESSOAFISICA:
+                return new PessoaFisicaDao(connection);
+            case PROFISSAO:
+                return new ProfissaoDao(connection);
+            case SEXO:
+                return new SexoDao(connection);
+            case TIPOCLIENTE:
+                return new TipoClienteDao(connection);
+            default:
+                return null;
+
+        }
+
+    }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         ConfigControl.getInstancia().salvarPropriedade("login", "confronto");
         ConfigControl.getInstancia().salvarPropriedadeEncriptada("password", "admin123");
         System.out.println(ConfigControl.getInstancia().carregaPropriedadeEncriptada("password"));
     }
-
-    @Override
-    public AbstractDao getDao(Class type) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-
 }

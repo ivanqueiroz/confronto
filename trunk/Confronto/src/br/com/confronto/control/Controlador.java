@@ -2,6 +2,7 @@ package br.com.confronto.control;
 
 import br.com.confronto.dao.DaoException;
 import br.com.confronto.dao.DaoFactory;
+import br.com.confronto.dao.EnumTipoDao;
 import br.com.confronto.model.vo.Cidade;
 import br.com.confronto.model.vo.Estado;
 import br.com.confronto.model.vo.EstadoCivil;
@@ -50,7 +51,7 @@ public class Controlador {
     public Vector<TipoCliente> getListaTipoCliente() {
         Vector<TipoCliente> lista = null;
         try {
-             lista = (Vector<TipoCliente>) DaoFactory.getInstancia().getDao("tipoCliente").obterTodos();
+             lista = (Vector<TipoCliente>) DaoFactory.getInstancia().getDao(EnumTipoDao.TIPOCLIENTE).obterTodos();
         } catch (DaoException ex) {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,25 +59,50 @@ public class Controlador {
     }
 
     public Vector<Profissao> getListaProfissoes() {
-        return (Vector<Profissao>) DaoFactory.getInstancia().getProfissaoDao().getProfissoes();
+        Vector<Profissao> lista = null;
+        try {
+            return (Vector<Profissao>) DaoFactory.getInstancia().getDao(EnumTipoDao.PROFISSAO).obterTodos();
+        } catch (DaoException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 
     public Vector<EstadoCivil> getListaEstadosCivis() {
-        return (Vector<EstadoCivil>) DaoFactory.getInstancia().getEstadoCivilDao().getEstadosCivis();
+
+        Vector<EstadoCivil> lista = null;
+        try {
+            return (Vector<EstadoCivil>) DaoFactory.getInstancia().getDao(EnumTipoDao.ESTADOCIVIL).obterTodos();
+        } catch (DaoException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 
     public Vector<Estado> getListaEstados() {
-        return (Vector<Estado>) DaoFactory.getInstancia().getEstadoDao().getEstados();
+        Vector<Estado> lista = null;
+        try {
+            return (Vector<Estado>) DaoFactory.getInstancia().getDao(EnumTipoDao.ESTADO).obterTodos();
+        } catch (DaoException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 
     public Vector<Cidade> getListaCidadesByUf(String siglaUf) {
-        return (Vector<Cidade>) DaoFactory.getInstancia().getCidadeDao().getCidadesPorEstado(siglaUf);
+        Vector<Cidade> lista = null;
+        try {
+            return (Vector<Cidade>) DaoFactory.getInstancia().getDao(EnumTipoDao.CIDADE).obterTodos();
+        } catch (DaoException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 
     public Vector<PessoaFisica> getListaPessoasFisicas() {
         Vector<PessoaFisica> lista = null;
         try {
-            lista = (Vector<PessoaFisica>) DaoFactory.getInstancia().getPessoaDao().obterTodos();
+            lista = (Vector<PessoaFisica>) DaoFactory.getInstancia().getDao(EnumTipoDao.PESSOAFISICA).obterTodos();
         } catch (DaoException ex) {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
         }

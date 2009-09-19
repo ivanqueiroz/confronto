@@ -15,7 +15,7 @@ import java.util.logging.Level;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class EstadoDao extends AbstractDao{
+public class EstadoDao extends AbstractDao<Estado,Long>{
 
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
@@ -27,6 +27,33 @@ public class EstadoDao extends AbstractDao{
     public EstadoDao(Connection connection) {
         this.connection = connection;
     }
+
+    @Override
+    public void apagar(Long id) throws DaoException {
+        super.apagar(id);
+    }
+
+    @Override
+    public void atualizar(Estado o) throws DaoException {
+        super.atualizar(o);
+    }
+
+    @Override
+    public void inserir(Estado o) throws DaoException {
+        super.inserir(o);
+    }
+
+    @Override
+    public Estado obterPorId(Long id) throws DaoException {
+        return super.obterPorId(id);
+    }
+
+    @Override
+    public List<Estado> obterTodos() throws DaoException {
+        return super.obterTodos();
+    }
+
+
 
     public List<Estado> getEstados() {
         List<Estado> estados = null;

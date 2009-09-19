@@ -15,7 +15,7 @@ import java.util.logging.Level;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class TipoDao extends AbstractDao<TipoCliente,Long>{
+public class TipoClienteDao extends AbstractDao<TipoCliente,Long>{
 
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
@@ -24,7 +24,7 @@ public class TipoDao extends AbstractDao<TipoCliente,Long>{
     private final String SQL_ATUALIZAR = SQL_PROP.getString("TBTIPO_UPDATE");
     private final String SQL_LISTAR = SQL_PROP.getString("TBTIPO_SELECT");
   
-    public TipoDao(Connection connection) {
+    public TipoClienteDao(Connection connection) {
         this.connection = connection;
     }
 
