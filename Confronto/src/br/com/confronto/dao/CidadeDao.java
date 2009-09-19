@@ -15,7 +15,9 @@ import java.util.logging.Level;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class CidadeDao extends AbstractDao{
+public class CidadeDao extends AbstractDao<Cidade,Long>{
+
+
 
     private Connection connection;
     private final ResourceBundle SQL_PROP = ResourceBundle.getBundle("sql");
@@ -28,6 +30,33 @@ public class CidadeDao extends AbstractDao{
     public CidadeDao(Connection connection) {
         this.connection = connection;
     }
+
+    @Override
+    public void apagar(Long id) throws DaoException {
+        super.apagar(id);
+    }
+
+    @Override
+    public void atualizar(Cidade o) throws DaoException {
+        super.atualizar(o);
+    }
+
+    @Override
+    public void inserir(Cidade o) throws DaoException {
+        super.inserir(o);
+    }
+
+    @Override
+    public Cidade obterPorId(Long id) throws DaoException {
+        return super.obterPorId(id);
+    }
+
+    @Override
+    public List<Cidade> obterTodos() throws DaoException {
+        return super.obterTodos();
+    }
+
+
 
     public List<Cidade> getCidades() {
         List<Cidade> cidades = null;

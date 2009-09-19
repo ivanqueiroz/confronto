@@ -29,6 +29,33 @@ public class EstadoCivilDao extends AbstractDao{
         this.connection = connection;
     }
 
+    @Override
+    public void apagar(Object id) throws DaoException {
+        super.apagar(id);
+    }
+
+    @Override
+    public void atualizar(Object o) throws DaoException {
+        super.atualizar(o);
+    }
+
+    @Override
+    public void inserir(Object o) throws DaoException {
+        super.inserir(o);
+    }
+
+    @Override
+    public Object obterPorId(Object id) throws DaoException {
+        return super.obterPorId(id);
+    }
+
+    @Override
+    public List obterTodos() throws DaoException {
+        return super.obterTodos();
+    }
+
+
+
     public List<EstadoCivil> getEstadosCivis() {
         List<EstadoCivil> lista = null;
         PreparedStatement ps = null;
