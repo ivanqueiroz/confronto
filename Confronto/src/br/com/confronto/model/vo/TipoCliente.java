@@ -1,12 +1,10 @@
 package br.com.confronto.model.vo;
 
-import java.io.Serializable;
-
 /**
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class TipoCliente implements Serializable {
+public class TipoCliente extends AbstractVo {
 
     private static final long serialVersionUID = 1L;
     private Long id;

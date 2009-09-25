@@ -1,8 +1,9 @@
 package br.com.confronto.control;
 
 import br.com.confronto.dao.DaoException;
-import br.com.confronto.dao.DaoFactory;
+import br.com.confronto.factory.DaoFactory;
 import br.com.confronto.dao.EnumTipoDao;
+import br.com.confronto.model.vo.AbstractVo;
 import br.com.confronto.model.vo.Cidade;
 import br.com.confronto.model.vo.Estado;
 import br.com.confronto.model.vo.EstadoCivil;
@@ -58,6 +59,16 @@ public class Controlador {
         return lista;
     }
 
+    public Vector<? extends AbstractVo> getLista(EnumTipoDao tipoDao) {
+        Vector<AbstractVo> lista = null;
+        try {
+             lista = (Vector<AbstractVo>) DaoFactory.getInstancia().getDao(tipoDao).obterTodos();
+        } catch (DaoException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+
     public Vector<Profissao> getListaProfissoes() {
         Vector<Profissao> lista = null;
         try {
@@ -92,7 +103,7 @@ public class Controlador {
     public Vector<Cidade> getListaCidadesByUf(String siglaUf) {
         Vector<Cidade> lista = null;
         try {
-            return (Vector<Cidade>) DaoFactory.getInstancia().getDao(EnumTipoDao.CIDADE).obterTodos();
+            return (Vector<Cidade>) DaoFactory.getInstancia().getDao(EnumTipoDao.CIDADE).obterPorId(this);
         } catch (DaoException ex) {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
         }
