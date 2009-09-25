@@ -21,6 +21,10 @@ public abstract class AbstractDao<T,K> {
         return null;
     }
 
+    public T buscar(K id) throws DaoException {
+        return null;
+    }
+
     public List<T> obterTodos() throws DaoException {
         return null;
     }

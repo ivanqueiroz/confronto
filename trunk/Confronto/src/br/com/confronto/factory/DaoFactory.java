@@ -1,5 +1,6 @@
-package br.com.confronto.dao;
+package br.com.confronto.factory;
 
+import br.com.confronto.dao.*;
 import br.com.confronto.util.ConfigControl;
 import br.com.confronto.util.LogControl;
 import java.io.FileNotFoundException;

@@ -6,6 +6,7 @@
 package br.com.confronto.view;
 
 import br.com.confronto.control.Controlador;
+import br.com.confronto.dao.EnumTipoDao;
 import br.com.confronto.model.vo.Cidade;
 import br.com.confronto.model.vo.Estado;
 import br.com.confronto.model.vo.EstadoCivil;
@@ -107,7 +108,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         lblTipo.setLabelFor(cmbTipoPessoa);
         lblTipo.setText("Tipo Cliente:");
 
-        cmbTipoPessoa.setModel(getModelTipo());
+        cmbTipoPessoa.setModel(getModel(EnumTipoDao.TIPOCLIENTE));
         cmbTipoPessoa.setMaximumSize(new java.awt.Dimension(28, 20));
 
         lblNome.setLabelFor(jtfNome);
@@ -116,7 +117,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
         lblSexo.setLabelFor(cmbSexo);
         lblSexo.setText("Sexo:");
 
-        cmbSexo.setModel(getModelSexo());
+        cmbSexo.setModel(getModel(EnumTipoDao.SEXO));
         cmbSexo.setMaximumSize(new java.awt.Dimension(28, 20));
         cmbSexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,11 +130,11 @@ public class CadPessoaPanel extends javax.swing.JPanel {
 
         lblEstadoCivil.setText("Estado Civil:");
 
-        cmbEstadoCivil.setModel(getModelTipo());
+        cmbEstadoCivil.setModel(getModel(EnumTipoDao.ESTADOCIVIL));
 
         lblProfissao.setText("Profissão:");
 
-        cmbProfissao.setModel(getModelProfissao());
+        cmbProfissao.setModel(getModel(EnumTipoDao.PROFISSAO));
         cmbProfissao.setAutoscrolls(true);
 
         lblRg.setLabelFor(jftfRg);
@@ -307,14 +308,14 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                                 .addGap(64, 64, 64)
                                 .addComponent(lblEstado)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbEstado, 0, 124, Short.MAX_VALUE))
-                            .addComponent(jtfEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)))
+                                .addComponent(cmbEstado, 0, 130, Short.MAX_VALUE))
+                            .addComponent(jtfEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)))
                     .addGroup(jpEnderecoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblCidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                         .addComponent(lblCep)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jftfCep, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -466,7 +467,7 @@ public class CadPessoaPanel extends javax.swing.JPanel {
                             .addGroup(jpContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblEmail)))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         jpnListagem.setBorder(javax.swing.BorderFactory.createTitledBorder("Listagem"));
@@ -540,6 +541,51 @@ public class CadPessoaPanel extends javax.swing.JPanel {
             modelTipo = new DefaultComboBoxModel(listaCombo);
         }
         return modelTipo;
+    }
+
+    public DefaultComboBoxModel getComboBoxModel(EnumTipoDao tipoDao) {
+        DefaultComboBoxModel model = null;
+        switch (tipoDao) {
+            case CIDADE:
+                Vector<Cidade> listaComboCidade = (Vector<Cidade>) Controlador.getInstancia().getLista(tipoDao);
+                if (listaComboCidade != null) {
+                    model = new DefaultComboBoxModel(listaComboCidade);
+                }
+            case ESTADO:
+                Vector<Estado> listaComboEstado = (Vector<Estado>) Controlador.getInstancia().getLista(tipoDao);
+                if (listaComboEstado != null) {
+                    model = new DefaultComboBoxModel(listaComboEstado);
+                }
+            case ESTADOCIVIL:
+                Vector<EstadoCivil> listaComboEstadoCivil = (Vector<EstadoCivil>) Controlador.getInstancia().getLista(tipoDao);
+                if (listaComboEstadoCivil != null) {
+                    model = new DefaultComboBoxModel(listaComboEstadoCivil);
+                }
+            case PESSOAFISICA:
+                Vector<PessoaFisica> listaComboPF = (Vector<PessoaFisica>) Controlador.getInstancia().getLista(tipoDao);
+                if (listaComboPF != null) {
+                    model = new DefaultComboBoxModel(listaComboPF);
+                }
+            case PROFISSAO:
+                Vector<Profissao> listaComboProfissao = (Vector<Profissao>) Controlador.getInstancia().getLista(tipoDao);
+                if (listaComboProfissao != null) {
+                    model = new DefaultComboBoxModel(listaComboProfissao);
+                }
+            case SEXO:
+                Vector<Sexo> listaComboSexo = (Vector<Sexo>) Controlador.getInstancia().getLista(tipoDao);
+                if (listaComboSexo != null) {
+                    model = new DefaultComboBoxModel(listaComboSexo);
+                }
+            case TIPOCLIENTE:
+                Vector<TipoCliente> listaComboTipoCliente = (Vector<TipoCliente>) Controlador.getInstancia().getLista(tipoDao);
+                if (listaComboTipoCliente != null) {
+                    model = new DefaultComboBoxModel(listaComboTipoCliente);
+                }
+            default:
+                model = new DefaultComboBoxModel();
+        }
+
+        return model;
     }
 
     public DefaultComboBoxModel getModelProfissao() {
@@ -627,7 +673,6 @@ public class CadPessoaPanel extends javax.swing.JPanel {
             cmbCidade.setModel(getModelCidade(aux.getSiglaUf()));
         }
     }//GEN-LAST:event_cmbEstadoActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cmbCidade;
     private javax.swing.JComboBox cmbEstado;

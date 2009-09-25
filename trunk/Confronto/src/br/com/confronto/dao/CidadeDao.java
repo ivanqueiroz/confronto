@@ -53,12 +53,6 @@ public class CidadeDao extends AbstractDao<Cidade,Long>{
 
     @Override
     public List<Cidade> obterTodos() throws DaoException {
-        return super.obterTodos();
-    }
-
-
-
-    public List<Cidade> getCidades() {
         List<Cidade> cidades = null;
         Cidade aux = null;
         ResultSet rs = null;
@@ -104,6 +98,9 @@ public class CidadeDao extends AbstractDao<Cidade,Long>{
         return cidades;
     }
 
+
+
+    
     public List<Cidade> getCidadesPorEstado(String siglaUf) {
         List<Cidade> cidades = null;
         Cidade aux = null;

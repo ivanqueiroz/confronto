@@ -4,7 +4,7 @@ package br.com.confronto.model.vo;
  *
  * @author Ivan Queiroz <ivanqueiroz@gmail.com>
  */
-public class Sexo {
+public class Sexo extends AbstractVo{
 
     private Long id;
     private String sexo;
